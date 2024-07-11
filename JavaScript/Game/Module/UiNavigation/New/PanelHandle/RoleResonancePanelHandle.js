@@ -1,3 +1,33 @@
-
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.RoleResonancePanelHandle=void 0;const SpecialPanelHandleBase_1=require("./SpecialPanelHandleBase");class RoleResonancePanelHandle extends SpecialPanelHandleBase_1.SpecialPanelHandleBase{constructor(){super(...arguments),this.GroupName="",this.hwo=void 0}OnGetSuitableNavigationListenerList(e){return this.hwo?[this.hwo]:[]}SetToggleSelectByGroupName(e){var s=this.GetNavigationGroup(e);if(s){this.GroupName=e;for(let e=0,t=s.ListenerList.Num();e<t;++e)s.ListenerList.Get(e).GetBehaviorComponent().bToggleOnSelect=!0}}ResetToggleSelect(){var s=this.GetNavigationGroup(this.GroupName);if(s){this.GroupName="";for(let e=0,t=s.ListenerList.Num();e<t;++e)s.ListenerList.Get(e).GetBehaviorComponent().bToggleOnSelect=!1}}SetDefaultNavigationListener(e){this.hwo=e}}exports.RoleResonancePanelHandle=RoleResonancePanelHandle;
-//# sourceMappingURL=RoleResonancePanelHandle.js.map
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: !0 }),
+  (exports.RoleResonancePanelHandle = void 0);
+const SpecialPanelHandleBase_1 = require("./SpecialPanelHandleBase");
+class RoleResonancePanelHandle extends SpecialPanelHandleBase_1.SpecialPanelHandleBase {
+  constructor() {
+    super(...arguments), (this.GroupName = ""), (this.hwo = void 0);
+  }
+  OnGetSuitableNavigationListenerList(e) {
+    return this.hwo ? [this.hwo] : [];
+  }
+  SetToggleSelectByGroupName(e) {
+    const s = this.GetNavigationGroup(e);
+    if (s) {
+      this.GroupName = e;
+      for (let e = 0, t = s.ListenerList.Num(); e < t; ++e)
+        s.ListenerList.Get(e).GetBehaviorComponent().bToggleOnSelect = !0;
+    }
+  }
+  ResetToggleSelect() {
+    const s = this.GetNavigationGroup(this.GroupName);
+    if (s) {
+      this.GroupName = "";
+      for (let e = 0, t = s.ListenerList.Num(); e < t; ++e)
+        s.ListenerList.Get(e).GetBehaviorComponent().bToggleOnSelect = !1;
+    }
+  }
+  SetDefaultNavigationListener(e) {
+    this.hwo = e;
+  }
+}
+exports.RoleResonancePanelHandle = RoleResonancePanelHandle;
+// # sourceMappingURL=RoleResonancePanelHandle.js.map

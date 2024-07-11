@@ -1,3 +1,86 @@
-
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.RewardExploreConfirmButton=void 0;const UE=require("ue"),TimerSystem_1=require("../../../../Core/Timer/TimerSystem"),StringUtils_1=require("../../../../Core/Utils/StringUtils"),TimeUtil_1=require("../../../Common/TimeUtil"),UiPanelBase_1=require("../../../Ui/Base/UiPanelBase"),UiManager_1=require("../../../Ui/UiManager"),LguiUtil_1=require("../../Util/LguiUtil");class RewardExploreConfirmButton extends UiPanelBase_1.UiPanelBase{constructor(i,t){super(),this.g0i=void 0,this.f0i=void 0,this.p0i=void 0,this.v0i=()=>{--this.f0i,this.f0i<=0&&(this.M0i(),this.g0i.OnTimeDownOnCallback&&this.g0i.OnTimeDownOnCallback(),this.g0i.IsTimeDownCloseView)&&UiManager_1.UiManager.CloseView("ExploreRewardView");var i=this.g0i.DescriptionTextId,t=this.GetText(2);LguiUtil_1.LguiUtil.SetLocalTextNew(t,i,this.f0i)},this.m2e=()=>{var i=this.g0i.OnClickedCallback;i&&i(this.S0i),this.g0i.IsClickedCloseView&&UiManager_1.UiManager.CloseView("ExploreRewardView")},this.S0i=t,this.CreateThenShowByActor(i)}OnRegisterComponent(){this.ComponentRegisterInfos=[[0,UE.UIText],[1,UE.UIItem],[2,UE.UIText],[3,UE.UIButtonComponent]],this.BtnBindInfo=[[3,this.m2e]]}OnBeforeDestroy(){this.M0i(),this.g0i=void 0}Refresh(i){this.g0i=i,this.E0i(i.ButtonTextId);i=!StringUtils_1.StringUtils.IsEmpty(i.DescriptionTextId);this.y0i(i),i&&this.I0i()}E0i(i){var t=this.GetText(0);LguiUtil_1.LguiUtil.SetLocalTextNew(t,i)}y0i(i){this.GetItem(1).SetUIActive(i)}I0i(){var i=this.g0i.DescriptionTextId,t=this.g0i.DescriptionArgs,e=this.g0i.TimeDown,s=this.GetText(2);e&&0<e?(LguiUtil_1.LguiUtil.SetLocalTextNew(s,i,e/TimeUtil_1.TimeUtil.InverseMillisecond),this.T0i(e)):LguiUtil_1.LguiUtil.SetLocalTextNew(s,i,...t)}T0i(i){this.f0i=i/TimeUtil_1.TimeUtil.InverseMillisecond,this.p0i=TimerSystem_1.TimerSystem.Forever(this.v0i,1e3)}M0i(){this.p0i&&TimerSystem_1.TimerSystem.Has(this.p0i)&&(TimerSystem_1.TimerSystem.Remove(this.p0i),this.p0i=void 0)}}exports.RewardExploreConfirmButton=RewardExploreConfirmButton;
-//# sourceMappingURL=RewardExploreConfirmButton.js.map
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: !0 }),
+  (exports.RewardExploreConfirmButton = void 0);
+const UE = require("ue");
+const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem");
+const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
+const TimeUtil_1 = require("../../../Common/TimeUtil");
+const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
+const UiManager_1 = require("../../../Ui/UiManager");
+const LguiUtil_1 = require("../../Util/LguiUtil");
+class RewardExploreConfirmButton extends UiPanelBase_1.UiPanelBase {
+  constructor(i, t) {
+    super(),
+      (this.g0i = void 0),
+      (this.f0i = void 0),
+      (this.p0i = void 0),
+      (this.v0i = () => {
+        --this.f0i,
+          this.f0i <= 0 &&
+            (this.M0i(),
+            this.g0i.OnTimeDownOnCallback && this.g0i.OnTimeDownOnCallback(),
+            this.g0i.IsTimeDownCloseView) &&
+            UiManager_1.UiManager.CloseView("ExploreRewardView");
+        const i = this.g0i.DescriptionTextId;
+        const t = this.GetText(2);
+        LguiUtil_1.LguiUtil.SetLocalTextNew(t, i, this.f0i);
+      }),
+      (this.m2e = () => {
+        const i = this.g0i.OnClickedCallback;
+        i && i(this.S0i),
+          this.g0i.IsClickedCloseView &&
+            UiManager_1.UiManager.CloseView("ExploreRewardView");
+      }),
+      (this.S0i = t),
+      this.CreateThenShowByActor(i);
+  }
+  OnRegisterComponent() {
+    (this.ComponentRegisterInfos = [
+      [0, UE.UIText],
+      [1, UE.UIItem],
+      [2, UE.UIText],
+      [3, UE.UIButtonComponent],
+    ]),
+      (this.BtnBindInfo = [[3, this.m2e]]);
+  }
+  OnBeforeDestroy() {
+    this.M0i(), (this.g0i = void 0);
+  }
+  Refresh(i) {
+    (this.g0i = i), this.E0i(i.ButtonTextId);
+    i = !StringUtils_1.StringUtils.IsEmpty(i.DescriptionTextId);
+    this.y0i(i), i && this.I0i();
+  }
+  E0i(i) {
+    const t = this.GetText(0);
+    LguiUtil_1.LguiUtil.SetLocalTextNew(t, i);
+  }
+  y0i(i) {
+    this.GetItem(1).SetUIActive(i);
+  }
+  I0i() {
+    const i = this.g0i.DescriptionTextId;
+    const t = this.g0i.DescriptionArgs;
+    const e = this.g0i.TimeDown;
+    const s = this.GetText(2);
+    e && e > 0
+      ? (LguiUtil_1.LguiUtil.SetLocalTextNew(
+          s,
+          i,
+          e / TimeUtil_1.TimeUtil.InverseMillisecond,
+        ),
+        this.T0i(e))
+      : LguiUtil_1.LguiUtil.SetLocalTextNew(s, i, ...t);
+  }
+  T0i(i) {
+    (this.f0i = i / TimeUtil_1.TimeUtil.InverseMillisecond),
+      (this.p0i = TimerSystem_1.TimerSystem.Forever(this.v0i, 1e3));
+  }
+  M0i() {
+    this.p0i &&
+      TimerSystem_1.TimerSystem.Has(this.p0i) &&
+      (TimerSystem_1.TimerSystem.Remove(this.p0i), (this.p0i = void 0));
+  }
+}
+exports.RewardExploreConfirmButton = RewardExploreConfirmButton;
+// # sourceMappingURL=RewardExploreConfirmButton.js.map

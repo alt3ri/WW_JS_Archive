@@ -3,7 +3,7 @@ module.exports = Long;
 /**
  * wasm optimizations, to do native i64 multiplication and divide
  */
-var wasm = null;
+const wasm = null;
 /*
 try {
   wasm = new WebAssembly.Instance(new WebAssembly.Module(new Uint8Array([
@@ -24,24 +24,23 @@ try {
  * @constructor
  */
 function Long(low, high, unsigned) {
+  /**
+   * The low 32 bits as a signed value.
+   * @type {number}
+   */
+  this.low = low | 0;
 
-    /**
-     * The low 32 bits as a signed value.
-     * @type {number}
-     */
-    this.low = low | 0;
+  /**
+   * The high 32 bits as a signed value.
+   * @type {number}
+   */
+  this.high = high | 0;
 
-    /**
-     * The high 32 bits as a signed value.
-     * @type {number}
-     */
-    this.high = high | 0;
-
-    /**
-     * Whether unsigned or not.
-     * @type {boolean}
-     */
-    this.unsigned = !!unsigned;
+  /**
+   * Whether unsigned or not.
+   * @type {boolean}
+   */
+  this.unsigned = !!unsigned;
 }
 
 // The internal representation of a long is the two given signed, 32-bit values.
@@ -78,7 +77,7 @@ Object.defineProperty(Long.prototype, "__isLong__", { value: true });
  * @inner
  */
 function isLong(obj) {
-    return (obj && obj["__isLong__"]) === true;
+  return (obj && obj.__isLong__) === true;
 }
 
 /**
@@ -94,14 +93,14 @@ Long.isLong = isLong;
  * @type {!Object}
  * @inner
  */
-var INT_CACHE = {};
+const INT_CACHE = {};
 
 /**
  * A cache of the Long representations of small unsigned integer values.
  * @type {!Object}
  * @inner
  */
-var UINT_CACHE = {};
+const UINT_CACHE = {};
 
 /**
  * @param {number} value
@@ -110,30 +109,34 @@ var UINT_CACHE = {};
  * @inner
  */
 function fromInt(value, unsigned) {
-    var obj, cachedObj, cache;
-    if (unsigned) {
-        value >>>= 0;
-        if (cache = (0 <= value && value < 256)) {
-            cachedObj = UINT_CACHE[value];
-            if (cachedObj)
-                return cachedObj;
-        }
-        obj = fromBits(value, (value | 0) < 0 ? -1 : 0, true);
-        if (cache)
-            UINT_CACHE[value] = obj;
-        return obj;
-    } else {
-        value |= 0;
-        if (cache = (-128 <= value && value < 128)) {
-            cachedObj = INT_CACHE[value];
-            if (cachedObj)
-                return cachedObj;
-        }
-        obj = fromBits(value, value < 0 ? -1 : 0, false);
-        if (cache)
-            INT_CACHE[value] = obj;
-        return obj;
+  let obj, cachedObj, cache;
+  if (unsigned) {
+    value >>>= 0;
+    if ((cache = value >= 0 && value < 256)) {
+      cachedObj = UINT_CACHE[value];
+      if (cachedObj) {
+        return cachedObj;
+      }
     }
+    obj = fromBits(value, (value | 0) < 0 ? -1 : 0, true);
+    if (cache) {
+      UINT_CACHE[value] = obj;
+    }
+    return obj;
+  } else {
+    value |= 0;
+    if ((cache = value >= -128 && value < 128)) {
+      cachedObj = INT_CACHE[value];
+      if (cachedObj) {
+        return cachedObj;
+      }
+    }
+    obj = fromBits(value, value < 0 ? -1 : 0, false);
+    if (cache) {
+      INT_CACHE[value] = obj;
+    }
+    return obj;
+  }
 }
 
 /**
@@ -152,30 +155,39 @@ Long.fromInt = fromInt;
  * @inner
  */
 function fromNumber(value, unsigned) {
-    if (isNaN(value))
-        return unsigned ? UZERO : ZERO;
-    if (unsigned) {
-        if (value < 0)
-            return UZERO;
-        if (value >= TWO_PWR_64_DBL)
-            return MAX_UNSIGNED_VALUE;
-    } else {
-        if (value <= -TWO_PWR_63_DBL)
-            return MIN_VALUE;
-        if (value + 1 >= TWO_PWR_63_DBL)
-            return MAX_VALUE;
+  if (isNaN(value)) {
+    return unsigned ? UZERO : ZERO;
+  }
+  if (unsigned) {
+    if (value < 0) {
+      return UZERO;
     }
-    if (value < 0)
-        return fromNumber(-value, unsigned).neg();
-    return fromBits((value % TWO_PWR_32_DBL) | 0, (value / TWO_PWR_32_DBL) | 0, unsigned);
+    if (value >= TWO_PWR_64_DBL) {
+      return MAX_UNSIGNED_VALUE;
+    }
+  } else {
+    if (value <= -TWO_PWR_63_DBL) {
+      return MIN_VALUE;
+    }
+    if (value + 1 >= TWO_PWR_63_DBL) {
+      return MAX_VALUE;
+    }
+  }
+  if (value < 0) {
+    return fromNumber(-value, unsigned).neg();
+  }
+  return fromBits(
+    value % TWO_PWR_32_DBL | 0,
+    (value / TWO_PWR_32_DBL) | 0,
+    unsigned,
+  );
 }
 
-function fromBigInt(value, unsigned)
-{
-    let a = Number(value % BigInt_TWO_PWR_32_DBL);
-    let b = Number(value / BigInt_TWO_PWR_32_DBL);
+function fromBigInt(value, unsigned) {
+  const a = Number(value % BigInt_TWO_PWR_32_DBL);
+  const b = Number(value / BigInt_TWO_PWR_32_DBL);
 
-    return fromBits(a, b, unsigned);
+  return fromBits(a, b, unsigned);
 }
 Long.fromBigInt = fromBigInt;
 
@@ -196,7 +208,7 @@ Long.fromNumber = fromNumber;
  * @inner
  */
 function fromBits(lowBits, highBits, unsigned) {
-    return new Long(lowBits, highBits, unsigned);
+  return new Long(lowBits, highBits, unsigned);
 }
 
 /**
@@ -217,7 +229,7 @@ Long.fromBits = fromBits;
  * @returns {number}
  * @inner
  */
-var pow_dbl = Math.pow; // Used 4 times (4*8 to 15+4)
+const pow_dbl = Math.pow; // Used 4 times (4*8 to 15+4)
 
 /**
  * @param {string} str
@@ -227,46 +239,53 @@ var pow_dbl = Math.pow; // Used 4 times (4*8 to 15+4)
  * @inner
  */
 function fromString(str, unsigned, radix) {
-    if (str.length === 0)
-        throw Error('empty string');
-    if (str === "NaN" || str === "Infinity" || str === "+Infinity" || str === "-Infinity")
-        return ZERO;
-    if (typeof unsigned === 'number') {
-        // For goog.math.long compatibility
-        radix = unsigned,
-        unsigned = false;
+  if (str.length === 0) {
+    throw Error("empty string");
+  }
+  if (
+    str === "NaN" ||
+    str === "Infinity" ||
+    str === "+Infinity" ||
+    str === "-Infinity"
+  ) {
+    return ZERO;
+  }
+  if (typeof unsigned === "number") {
+    // For goog.math.long compatibility
+    (radix = unsigned), (unsigned = false);
+  } else {
+    unsigned = !!unsigned;
+  }
+  radix = radix || 10;
+  if (radix < 2 || radix > 36) {
+    throw RangeError("radix");
+  }
+
+  let p;
+  if ((p = str.indexOf("-")) > 0) {
+    throw Error("interior hyphen");
+  } else if (p === 0) {
+    return fromString(str.substring(1), unsigned, radix).neg();
+  }
+
+  // Do several (8) digits each time through the loop, so as to
+  // minimize the calls to the very expensive emulated div.
+  const radixToPower = fromNumber(pow_dbl(radix, 8));
+
+  let result = ZERO;
+  for (let i = 0; i < str.length; i += 8) {
+    const size = Math.min(8, str.length - i);
+    const value = parseInt(str.substring(i, i + size), radix);
+    if (size < 8) {
+      const power = fromNumber(pow_dbl(radix, size));
+      result = result.mul(power).add(fromNumber(value));
     } else {
-        unsigned = !! unsigned;
+      result = result.mul(radixToPower);
+      result = result.add(fromNumber(value));
     }
-    radix = radix || 10;
-    if (radix < 2 || 36 < radix)
-        throw RangeError('radix');
-
-    var p;
-    if ((p = str.indexOf('-')) > 0)
-        throw Error('interior hyphen');
-    else if (p === 0) {
-        return fromString(str.substring(1), unsigned, radix).neg();
-    }
-
-    // Do several (8) digits each time through the loop, so as to
-    // minimize the calls to the very expensive emulated div.
-    var radixToPower = fromNumber(pow_dbl(radix, 8));
-
-    var result = ZERO;
-    for (var i = 0; i < str.length; i += 8) {
-        var size = Math.min(8, str.length - i),
-            value = parseInt(str.substring(i, i + size), radix);
-        if (size < 8) {
-            var power = fromNumber(pow_dbl(radix, size));
-            result = result.mul(power).add(fromNumber(value));
-        } else {
-            result = result.mul(radixToPower);
-            result = result.add(fromNumber(value));
-        }
-    }
-    result.unsigned = unsigned;
-    return result;
+  }
+  result.unsigned = unsigned;
+  return result;
 }
 
 /**
@@ -287,14 +306,21 @@ Long.fromString = fromString;
  * @inner
  */
 function fromValue(val, unsigned) {
-    if (typeof val === 'number')
-        return fromNumber(val, unsigned);
-    if (typeof val === 'string')
-        return fromString(val, unsigned);
-    if (typeof val === 'bigint')
-        return fromBigInt(val, unsigned);
-    // Throws for non-objects, converts non-instanceof Long:
-    return fromBits(val.low, val.high, typeof unsigned === 'boolean' ? unsigned : val.unsigned);
+  if (typeof val === "number") {
+    return fromNumber(val, unsigned);
+  }
+  if (typeof val === "string") {
+    return fromString(val, unsigned);
+  }
+  if (typeof val === "bigint") {
+    return fromBigInt(val, unsigned);
+  }
+  // Throws for non-objects, converts non-instanceof Long:
+  return fromBits(
+    val.low,
+    val.high,
+    typeof unsigned === "boolean" ? unsigned : val.unsigned,
+  );
 }
 
 /**
@@ -316,14 +342,14 @@ var BigInt_TWO_PWR_32_DBL = 1n << 32n;
  * @const
  * @inner
  */
-var TWO_PWR_16_DBL = 1 << 16;
+const TWO_PWR_16_DBL = 1 << 16;
 
 /**
  * @type {number}
  * @const
  * @inner
  */
-var TWO_PWR_24_DBL = 1 << 24;
+const TWO_PWR_24_DBL = 1 << 24;
 
 /**
  * @type {number}
@@ -351,7 +377,7 @@ var TWO_PWR_63_DBL = TWO_PWR_64_DBL / 2;
  * @const
  * @inner
  */
-var TWO_PWR_24 = fromInt(TWO_PWR_24_DBL);
+const TWO_PWR_24 = fromInt(TWO_PWR_24_DBL);
 
 /**
  * @type {!Long}
@@ -381,7 +407,7 @@ Long.UZERO = UZERO;
  * @type {!Long}
  * @inner
  */
-var ONE = fromInt(1);
+const ONE = fromInt(1);
 
 /**
  * Signed one.
@@ -393,7 +419,7 @@ Long.ONE = ONE;
  * @type {!Long}
  * @inner
  */
-var UONE = fromInt(1, true);
+const UONE = fromInt(1, true);
 
 /**
  * Unsigned one.
@@ -405,7 +431,7 @@ Long.UONE = UONE;
  * @type {!Long}
  * @inner
  */
-var NEG_ONE = fromInt(-1);
+const NEG_ONE = fromInt(-1);
 
 /**
  * Signed negative one.
@@ -417,7 +443,7 @@ Long.NEG_ONE = NEG_ONE;
  * @type {!Long}
  * @inner
  */
-var MAX_VALUE = fromBits(0xFFFFFFFF|0, 0x7FFFFFFF|0, false);
+var MAX_VALUE = fromBits(0xffffffff | 0, 0x7fffffff | 0, false);
 
 /**
  * Maximum signed value.
@@ -429,7 +455,7 @@ Long.MAX_VALUE = MAX_VALUE;
  * @type {!Long}
  * @inner
  */
-var MAX_UNSIGNED_VALUE = fromBits(0xFFFFFFFF|0, 0xFFFFFFFF|0, true);
+var MAX_UNSIGNED_VALUE = fromBits(0xffffffff | 0, 0xffffffff | 0, true);
 
 /**
  * Maximum unsigned value.
@@ -441,7 +467,7 @@ Long.MAX_UNSIGNED_VALUE = MAX_UNSIGNED_VALUE;
  * @type {!Long}
  * @inner
  */
-var MIN_VALUE = fromBits(0, 0x80000000|0, false);
+var MIN_VALUE = fromBits(0, 0x80000000 | 0, false);
 
 /**
  * Minimum signed value.
@@ -453,14 +479,14 @@ Long.MIN_VALUE = MIN_VALUE;
  * @alias Long.prototype
  * @inner
  */
-var LongPrototype = Long.prototype;
+const LongPrototype = Long.prototype;
 
 /**
  * Converts the Long to a 32 bit integer, assuming it is a 32 bit integer.
  * @returns {number}
  */
 LongPrototype.toInt = function toInt() {
-    return this.unsigned ? this.low >>> 0 : this.low;
+  return this.unsigned ? this.low >>> 0 : this.low;
 };
 
 /**
@@ -468,9 +494,10 @@ LongPrototype.toInt = function toInt() {
  * @returns {number}
  */
 LongPrototype.toNumber = function toNumber() {
-    if (this.unsigned)
-        return ((this.high >>> 0) * TWO_PWR_32_DBL) + (this.low >>> 0);
-    return this.high * TWO_PWR_32_DBL + (this.low >>> 0);
+  if (this.unsigned) {
+    return (this.high >>> 0) * TWO_PWR_32_DBL + (this.low >>> 0);
+  }
+  return this.high * TWO_PWR_32_DBL + (this.low >>> 0);
 };
 
 /**
@@ -481,41 +508,46 @@ LongPrototype.toNumber = function toNumber() {
  * @throws {RangeError} If `radix` is out of range
  */
 LongPrototype.toString = function toString(radix) {
-    radix = radix || 10;
-    if (radix < 2 || 36 < radix)
-        throw RangeError('radix');
-    if (this.isZero())
-        return '0';
-    if (this.isNegative()) { // Unsigned Longs are never negative
-        if (this.eq(MIN_VALUE)) {
-            // We need to change the Long value before it can be negated, so we remove
-            // the bottom-most digit in this base and then recurse to do the rest.
-            var radixLong = fromNumber(radix),
-                div = this.div(radixLong),
-                rem1 = div.mul(radixLong).sub(this);
-            return div.toString(radix) + rem1.toInt().toString(radix);
-        } else
-            return '-' + this.neg().toString(radix);
+  radix = radix || 10;
+  if (radix < 2 || radix > 36) {
+    throw RangeError("radix");
+  }
+  if (this.isZero()) {
+    return "0";
+  }
+  if (this.isNegative()) {
+    // Unsigned Longs are never negative
+    if (this.eq(MIN_VALUE)) {
+      // We need to change the Long value before it can be negated, so we remove
+      // the bottom-most digit in this base and then recurse to do the rest.
+      const radixLong = fromNumber(radix);
+      const div = this.div(radixLong);
+      const rem1 = div.mul(radixLong).sub(this);
+      return div.toString(radix) + rem1.toInt().toString(radix);
+    } else {
+      return "-" + this.neg().toString(radix);
     }
+  }
 
-    // Do several (6) digits each time through the loop, so as to
-    // minimize the calls to the very expensive emulated div.
-    var radixToPower = fromNumber(pow_dbl(radix, 6), this.unsigned),
-        rem = this;
-    var result = '';
-    while (true) {
-        var remDiv = rem.div(radixToPower),
-            intval = rem.sub(remDiv.mul(radixToPower)).toInt() >>> 0,
-            digits = intval.toString(radix);
-        rem = remDiv;
-        if (rem.isZero())
-            return digits + result;
-        else {
-            while (digits.length < 6)
-                digits = '0' + digits;
-            result = '' + digits + result;
-        }
+  // Do several (6) digits each time through the loop, so as to
+  // minimize the calls to the very expensive emulated div.
+  const radixToPower = fromNumber(pow_dbl(radix, 6), this.unsigned);
+  let rem = this;
+  let result = "";
+  while (true) {
+    const remDiv = rem.div(radixToPower);
+    const intval = rem.sub(remDiv.mul(radixToPower)).toInt() >>> 0;
+    let digits = intval.toString(radix);
+    rem = remDiv;
+    if (rem.isZero()) {
+      return digits + result;
+    } else {
+      while (digits.length < 6) {
+        digits = "0" + digits;
+      }
+      result = "" + digits + result;
     }
+  }
 };
 
 /**
@@ -523,7 +555,7 @@ LongPrototype.toString = function toString(radix) {
  * @returns {number} Signed high bits
  */
 LongPrototype.getHighBits = function getHighBits() {
-    return this.high;
+  return this.high;
 };
 
 /**
@@ -531,7 +563,7 @@ LongPrototype.getHighBits = function getHighBits() {
  * @returns {number} Unsigned high bits
  */
 LongPrototype.getHighBitsUnsigned = function getHighBitsUnsigned() {
-    return this.high >>> 0;
+  return this.high >>> 0;
 };
 
 /**
@@ -539,7 +571,7 @@ LongPrototype.getHighBitsUnsigned = function getHighBitsUnsigned() {
  * @returns {number} Signed low bits
  */
 LongPrototype.getLowBits = function getLowBits() {
-    return this.low;
+  return this.low;
 };
 
 /**
@@ -547,7 +579,7 @@ LongPrototype.getLowBits = function getLowBits() {
  * @returns {number} Unsigned low bits
  */
 LongPrototype.getLowBitsUnsigned = function getLowBitsUnsigned() {
-    return this.low >>> 0;
+  return this.low >>> 0;
 };
 
 /**
@@ -555,13 +587,17 @@ LongPrototype.getLowBitsUnsigned = function getLowBitsUnsigned() {
  * @returns {number}
  */
 LongPrototype.getNumBitsAbs = function getNumBitsAbs() {
-    if (this.isNegative()) // Unsigned Longs are never negative
-        return this.eq(MIN_VALUE) ? 64 : this.neg().getNumBitsAbs();
-    var val = this.high != 0 ? this.high : this.low;
-    for (var bit = 31; bit > 0; bit--)
-        if ((val & (1 << bit)) != 0)
-            break;
-    return this.high != 0 ? bit + 33 : bit + 1;
+  if (this.isNegative()) {
+    // Unsigned Longs are never negative
+    return this.eq(MIN_VALUE) ? 64 : this.neg().getNumBitsAbs();
+  }
+  const val = this.high != 0 ? this.high : this.low;
+  for (var bit = 31; bit > 0; bit--) {
+    if ((val & (1 << bit)) != 0) {
+      break;
+    }
+  }
+  return this.high != 0 ? bit + 33 : bit + 1;
 };
 
 /**
@@ -569,7 +605,7 @@ LongPrototype.getNumBitsAbs = function getNumBitsAbs() {
  * @returns {boolean}
  */
 LongPrototype.isZero = function isZero() {
-    return this.high === 0 && this.low === 0;
+  return this.high === 0 && this.low === 0;
 };
 
 /**
@@ -583,7 +619,7 @@ LongPrototype.eqz = LongPrototype.isZero;
  * @returns {boolean}
  */
 LongPrototype.isNegative = function isNegative() {
-    return !this.unsigned && this.high < 0;
+  return !this.unsigned && this.high < 0;
 };
 
 /**
@@ -591,7 +627,7 @@ LongPrototype.isNegative = function isNegative() {
  * @returns {boolean}
  */
 LongPrototype.isPositive = function isPositive() {
-    return this.unsigned || this.high >= 0;
+  return this.unsigned || this.high >= 0;
 };
 
 /**
@@ -599,7 +635,7 @@ LongPrototype.isPositive = function isPositive() {
  * @returns {boolean}
  */
 LongPrototype.isOdd = function isOdd() {
-    return (this.low & 1) === 1;
+  return (this.low & 1) === 1;
 };
 
 /**
@@ -607,7 +643,7 @@ LongPrototype.isOdd = function isOdd() {
  * @returns {boolean}
  */
 LongPrototype.isEven = function isEven() {
-    return (this.low & 1) === 0;
+  return (this.low & 1) === 0;
 };
 
 /**
@@ -616,12 +652,18 @@ LongPrototype.isEven = function isEven() {
  * @returns {boolean}
  */
 LongPrototype.equals = function equals(other) {
-    //console.log(this.low + " " + other.low);
-    if (!isLong(other))
-        other = fromValue(other);
-    if (this.unsigned !== other.unsigned && (this.high >>> 31) === 1 && (other.high >>> 31) === 1)
-        return false;
-    return this.high === other.high && this.low === other.low;
+  // console.log(this.low + " " + other.low);
+  if (!isLong(other)) {
+    other = fromValue(other);
+  }
+  if (
+    this.unsigned !== other.unsigned &&
+    this.high >>> 31 === 1 &&
+    other.high >>> 31 === 1
+  ) {
+    return false;
+  }
+  return this.high === other.high && this.low === other.low;
 };
 
 /**
@@ -638,7 +680,7 @@ LongPrototype.eq = LongPrototype.equals;
  * @returns {boolean}
  */
 LongPrototype.notEquals = function notEquals(other) {
-    return !this.eq(/* validates */ other);
+  return !this.eq(/* validates */ other);
 };
 
 /**
@@ -663,7 +705,7 @@ LongPrototype.ne = LongPrototype.notEquals;
  * @returns {boolean}
  */
 LongPrototype.lessThan = function lessThan(other) {
-    return this.comp(/* validates */ other) < 0;
+  return this.comp(/* validates */ other) < 0;
 };
 
 /**
@@ -680,7 +722,7 @@ LongPrototype.lt = LongPrototype.lessThan;
  * @returns {boolean}
  */
 LongPrototype.lessThanOrEqual = function lessThanOrEqual(other) {
-    return this.comp(/* validates */ other) <= 0;
+  return this.comp(/* validates */ other) <= 0;
 };
 
 /**
@@ -705,7 +747,7 @@ LongPrototype.le = LongPrototype.lessThanOrEqual;
  * @returns {boolean}
  */
 LongPrototype.greaterThan = function greaterThan(other) {
-    return this.comp(/* validates */ other) > 0;
+  return this.comp(/* validates */ other) > 0;
 };
 
 /**
@@ -722,7 +764,7 @@ LongPrototype.gt = LongPrototype.greaterThan;
  * @returns {boolean}
  */
 LongPrototype.greaterThanOrEqual = function greaterThanOrEqual(other) {
-    return this.comp(/* validates */ other) >= 0;
+  return this.comp(/* validates */ other) >= 0;
 };
 
 /**
@@ -748,21 +790,29 @@ LongPrototype.ge = LongPrototype.greaterThanOrEqual;
  *  if the given one is greater
  */
 LongPrototype.compare = function compare(other) {
-    if (!isLong(other))
-        other = fromValue(other);
-    if (this.eq(other))
-        return 0;
-    var thisNeg = this.isNegative(),
-        otherNeg = other.isNegative();
-    if (thisNeg && !otherNeg)
-        return -1;
-    if (!thisNeg && otherNeg)
-        return 1;
-    // At this point the sign bits are the same
-    if (!this.unsigned)
-        return this.sub(other).isNegative() ? -1 : 1;
-    // Both are positive if at least one is unsigned
-    return (other.high >>> 0) > (this.high >>> 0) || (other.high === this.high && (other.low >>> 0) > (this.low >>> 0)) ? -1 : 1;
+  if (!isLong(other)) {
+    other = fromValue(other);
+  }
+  if (this.eq(other)) {
+    return 0;
+  }
+  const thisNeg = this.isNegative();
+  const otherNeg = other.isNegative();
+  if (thisNeg && !otherNeg) {
+    return -1;
+  }
+  if (!thisNeg && otherNeg) {
+    return 1;
+  }
+  // At this point the sign bits are the same
+  if (!this.unsigned) {
+    return this.sub(other).isNegative() ? -1 : 1;
+  }
+  // Both are positive if at least one is unsigned
+  return other.high >>> 0 > this.high >>> 0 ||
+    (other.high === this.high && other.low >>> 0 > this.low >>> 0)
+    ? -1
+    : 1;
 };
 
 /**
@@ -779,9 +829,10 @@ LongPrototype.comp = LongPrototype.compare;
  * @returns {!Long} Negated Long
  */
 LongPrototype.negate = function negate() {
-    if (!this.unsigned && this.eq(MIN_VALUE))
-        return MIN_VALUE;
-    return this.not().add(ONE);
+  if (!this.unsigned && this.eq(MIN_VALUE)) {
+    return MIN_VALUE;
+  }
+  return this.not().add(ONE);
 };
 
 /**
@@ -797,34 +848,38 @@ LongPrototype.neg = LongPrototype.negate;
  * @returns {!Long} Sum
  */
 LongPrototype.add = function add(addend) {
-    if (!isLong(addend))
-        addend = fromValue(addend);
+  if (!isLong(addend)) {
+    addend = fromValue(addend);
+  }
 
-    // Divide each number into 4 chunks of 16 bits, and then sum the chunks.
+  // Divide each number into 4 chunks of 16 bits, and then sum the chunks.
 
-    var a48 = this.high >>> 16;
-    var a32 = this.high & 0xFFFF;
-    var a16 = this.low >>> 16;
-    var a00 = this.low & 0xFFFF;
+  const a48 = this.high >>> 16;
+  const a32 = this.high & 0xffff;
+  const a16 = this.low >>> 16;
+  const a00 = this.low & 0xffff;
 
-    var b48 = addend.high >>> 16;
-    var b32 = addend.high & 0xFFFF;
-    var b16 = addend.low >>> 16;
-    var b00 = addend.low & 0xFFFF;
+  const b48 = addend.high >>> 16;
+  const b32 = addend.high & 0xffff;
+  const b16 = addend.low >>> 16;
+  const b00 = addend.low & 0xffff;
 
-    var c48 = 0, c32 = 0, c16 = 0, c00 = 0;
-    c00 += a00 + b00;
-    c16 += c00 >>> 16;
-    c00 &= 0xFFFF;
-    c16 += a16 + b16;
-    c32 += c16 >>> 16;
-    c16 &= 0xFFFF;
-    c32 += a32 + b32;
-    c48 += c32 >>> 16;
-    c32 &= 0xFFFF;
-    c48 += a48 + b48;
-    c48 &= 0xFFFF;
-    return fromBits((c16 << 16) | c00, (c48 << 16) | c32, this.unsigned);
+  let c48 = 0;
+  let c32 = 0;
+  let c16 = 0;
+  let c00 = 0;
+  c00 += a00 + b00;
+  c16 += c00 >>> 16;
+  c00 &= 0xffff;
+  c16 += a16 + b16;
+  c32 += c16 >>> 16;
+  c16 &= 0xffff;
+  c32 += a32 + b32;
+  c48 += c32 >>> 16;
+  c32 &= 0xffff;
+  c48 += a48 + b48;
+  c48 &= 0xffff;
+  return fromBits((c16 << 16) | c00, (c48 << 16) | c32, this.unsigned);
 };
 
 /**
@@ -833,9 +888,10 @@ LongPrototype.add = function add(addend) {
  * @returns {!Long} Difference
  */
 LongPrototype.subtract = function subtract(subtrahend) {
-    if (!isLong(subtrahend))
-        subtrahend = fromValue(subtrahend);
-    return this.add(subtrahend.neg());
+  if (!isLong(subtrahend)) {
+    subtrahend = fromValue(subtrahend);
+  }
+  return this.add(subtrahend.neg());
 };
 
 /**
@@ -852,74 +908,82 @@ LongPrototype.sub = LongPrototype.subtract;
  * @returns {!Long} Product
  */
 LongPrototype.multiply = function multiply(multiplier) {
-    if (this.isZero())
-        return ZERO;
-    if (!isLong(multiplier))
-        multiplier = fromValue(multiplier);
+  if (this.isZero()) {
+    return ZERO;
+  }
+  if (!isLong(multiplier)) {
+    multiplier = fromValue(multiplier);
+  }
 
-    // use wasm support if present
-    if (wasm) {
-        var low = wasm.mul(this.low,
-                           this.high,
-                           multiplier.low,
-                           multiplier.high);
-        return fromBits(low, wasm.get_high(), this.unsigned);
+  // use wasm support if present
+  if (wasm) {
+    const low = wasm.mul(this.low, this.high, multiplier.low, multiplier.high);
+    return fromBits(low, wasm.get_high(), this.unsigned);
+  }
+
+  if (multiplier.isZero()) {
+    return ZERO;
+  }
+  if (this.eq(MIN_VALUE)) {
+    return multiplier.isOdd() ? MIN_VALUE : ZERO;
+  }
+  if (multiplier.eq(MIN_VALUE)) {
+    return this.isOdd() ? MIN_VALUE : ZERO;
+  }
+
+  if (this.isNegative()) {
+    if (multiplier.isNegative()) {
+      return this.neg().mul(multiplier.neg());
+    } else {
+      return this.neg().mul(multiplier).neg();
     }
+  } else if (multiplier.isNegative()) {
+    return this.mul(multiplier.neg()).neg();
+  }
 
-    if (multiplier.isZero())
-        return ZERO;
-    if (this.eq(MIN_VALUE))
-        return multiplier.isOdd() ? MIN_VALUE : ZERO;
-    if (multiplier.eq(MIN_VALUE))
-        return this.isOdd() ? MIN_VALUE : ZERO;
+  // If both longs are small, use float multiplication
+  if (this.lt(TWO_PWR_24) && multiplier.lt(TWO_PWR_24)) {
+    return fromNumber(this.toNumber() * multiplier.toNumber(), this.unsigned);
+  }
 
-    if (this.isNegative()) {
-        if (multiplier.isNegative())
-            return this.neg().mul(multiplier.neg());
-        else
-            return this.neg().mul(multiplier).neg();
-    } else if (multiplier.isNegative())
-        return this.mul(multiplier.neg()).neg();
+  // Divide each long into 4 chunks of 16 bits, and then add up 4x4 products.
+  // We can skip products that would overflow.
 
-    // If both longs are small, use float multiplication
-    if (this.lt(TWO_PWR_24) && multiplier.lt(TWO_PWR_24))
-        return fromNumber(this.toNumber() * multiplier.toNumber(), this.unsigned);
+  const a48 = this.high >>> 16;
+  const a32 = this.high & 0xffff;
+  const a16 = this.low >>> 16;
+  const a00 = this.low & 0xffff;
 
-    // Divide each long into 4 chunks of 16 bits, and then add up 4x4 products.
-    // We can skip products that would overflow.
+  const b48 = multiplier.high >>> 16;
+  const b32 = multiplier.high & 0xffff;
+  const b16 = multiplier.low >>> 16;
+  const b00 = multiplier.low & 0xffff;
 
-    var a48 = this.high >>> 16;
-    var a32 = this.high & 0xFFFF;
-    var a16 = this.low >>> 16;
-    var a00 = this.low & 0xFFFF;
-
-    var b48 = multiplier.high >>> 16;
-    var b32 = multiplier.high & 0xFFFF;
-    var b16 = multiplier.low >>> 16;
-    var b00 = multiplier.low & 0xFFFF;
-
-    var c48 = 0, c32 = 0, c16 = 0, c00 = 0;
-    c00 += a00 * b00;
-    c16 += c00 >>> 16;
-    c00 &= 0xFFFF;
-    c16 += a16 * b00;
-    c32 += c16 >>> 16;
-    c16 &= 0xFFFF;
-    c16 += a00 * b16;
-    c32 += c16 >>> 16;
-    c16 &= 0xFFFF;
-    c32 += a32 * b00;
-    c48 += c32 >>> 16;
-    c32 &= 0xFFFF;
-    c32 += a16 * b16;
-    c48 += c32 >>> 16;
-    c32 &= 0xFFFF;
-    c32 += a00 * b32;
-    c48 += c32 >>> 16;
-    c32 &= 0xFFFF;
-    c48 += a48 * b00 + a32 * b16 + a16 * b32 + a00 * b48;
-    c48 &= 0xFFFF;
-    return fromBits((c16 << 16) | c00, (c48 << 16) | c32, this.unsigned);
+  let c48 = 0;
+  let c32 = 0;
+  let c16 = 0;
+  let c00 = 0;
+  c00 += a00 * b00;
+  c16 += c00 >>> 16;
+  c00 &= 0xffff;
+  c16 += a16 * b00;
+  c32 += c16 >>> 16;
+  c16 &= 0xffff;
+  c16 += a00 * b16;
+  c32 += c16 >>> 16;
+  c16 &= 0xffff;
+  c32 += a32 * b00;
+  c48 += c32 >>> 16;
+  c32 &= 0xffff;
+  c32 += a16 * b16;
+  c48 += c32 >>> 16;
+  c32 &= 0xffff;
+  c32 += a00 * b32;
+  c48 += c32 >>> 16;
+  c32 &= 0xffff;
+  c48 += a48 * b00 + a32 * b16 + a16 * b32 + a00 * b48;
+  c48 &= 0xffff;
+  return fromBits((c16 << 16) | c00, (c48 << 16) | c32, this.unsigned);
 };
 
 /**
@@ -937,110 +1001,125 @@ LongPrototype.mul = LongPrototype.multiply;
  * @returns {!Long} Quotient
  */
 LongPrototype.divide = function divide(divisor) {
-    if (!isLong(divisor))
-        divisor = fromValue(divisor);
-    if (divisor.isZero())
-        throw Error('division by zero');
+  if (!isLong(divisor)) {
+    divisor = fromValue(divisor);
+  }
+  if (divisor.isZero()) {
+    throw Error("division by zero");
+  }
 
-    // use wasm support if present
-    if (wasm) {
-        // guard against signed division overflow: the largest
-        // negative number / -1 would be 1 larger than the largest
-        // positive number, due to two's complement.
-        if (!this.unsigned &&
-            this.high === -0x80000000 &&
-            divisor.low === -1 && divisor.high === -1) {
-            // be consistent with non-wasm code path
-            return this;
+  // use wasm support if present
+  if (wasm) {
+    // guard against signed division overflow: the largest
+    // negative number / -1 would be 1 larger than the largest
+    // positive number, due to two's complement.
+    if (
+      !this.unsigned &&
+      this.high === -0x80000000 &&
+      divisor.low === -1 &&
+      divisor.high === -1
+    ) {
+      // be consistent with non-wasm code path
+      return this;
+    }
+    const low = (this.unsigned ? wasm.div_u : wasm.div_s)(
+      this.low,
+      this.high,
+      divisor.low,
+      divisor.high,
+    );
+    return fromBits(low, wasm.get_high(), this.unsigned);
+  }
+
+  if (this.isZero()) {
+    return this.unsigned ? UZERO : ZERO;
+  }
+  let approx, rem, res;
+  if (!this.unsigned) {
+    // This section is only relevant for signed longs and is derived from the
+    // closure library as a whole.
+    if (this.eq(MIN_VALUE)) {
+      if (divisor.eq(ONE) || divisor.eq(NEG_ONE)) {
+        return MIN_VALUE;
+      } // recall that -MIN_VALUE == MIN_VALUE
+      else if (divisor.eq(MIN_VALUE)) {
+        return ONE;
+      } else {
+        // At this point, we have |other| >= 2, so |this/other| < |MIN_VALUE|.
+        const halfThis = this.shr(1);
+        approx = halfThis.div(divisor).shl(1);
+        if (approx.eq(ZERO)) {
+          return divisor.isNegative() ? ONE : NEG_ONE;
+        } else {
+          rem = this.sub(divisor.mul(approx));
+          res = approx.add(rem.div(divisor));
+          return res;
         }
-        var low = (this.unsigned ? wasm.div_u : wasm.div_s)(
-            this.low,
-            this.high,
-            divisor.low,
-            divisor.high
-        );
-        return fromBits(low, wasm.get_high(), this.unsigned);
+      }
+    } else if (divisor.eq(MIN_VALUE)) {
+      return this.unsigned ? UZERO : ZERO;
+    }
+    if (this.isNegative()) {
+      if (divisor.isNegative()) {
+        return this.neg().div(divisor.neg());
+      }
+      return this.neg().div(divisor).neg();
+    } else if (divisor.isNegative()) {
+      return this.div(divisor.neg()).neg();
+    }
+    res = ZERO;
+  } else {
+    // The algorithm below has not been made for unsigned longs. It's therefore
+    // required to take special care of the MSB prior to running it.
+    if (!divisor.unsigned) {
+      divisor = divisor.toUnsigned();
+    }
+    if (divisor.gt(this)) {
+      return UZERO;
+    }
+    if (divisor.gt(this.shru(1))) {
+      // 15 >>> 1 = 7 ; with divisor = 8 ; true
+      return UONE;
+    }
+    res = UZERO;
+  }
+
+  // Repeat the following until the remainder is less than other:  find a
+  // floating-point that approximates remainder / other *from below*, add this
+  // into the result, and subtract it from the remainder.  It is critical that
+  // the approximate value is less than or equal to the real value so that the
+  // remainder never becomes negative.
+  rem = this;
+  while (rem.gte(divisor)) {
+    // Approximate the result of division. This may be a little greater or
+    // smaller than the actual value.
+    approx = Math.max(1, Math.floor(rem.toNumber() / divisor.toNumber()));
+
+    // We will tweak the approximate result by changing it in the 48-th digit or
+    // the smallest non-fractional digit, whichever is larger.
+    const log2 = Math.ceil(Math.log(approx) / Math.LN2);
+    const delta = log2 <= 48 ? 1 : pow_dbl(2, log2 - 48);
+
+    // Decrease the approximation until it is smaller than the remainder.  Note
+    // that if it is too large, the product overflows and is negative.
+    let approxRes = fromNumber(approx);
+    let approxRem = approxRes.mul(divisor);
+    while (approxRem.isNegative() || approxRem.gt(rem)) {
+      approx -= delta;
+      approxRes = fromNumber(approx, this.unsigned);
+      approxRem = approxRes.mul(divisor);
     }
 
-    if (this.isZero())
-        return this.unsigned ? UZERO : ZERO;
-    var approx, rem, res;
-    if (!this.unsigned) {
-        // This section is only relevant for signed longs and is derived from the
-        // closure library as a whole.
-        if (this.eq(MIN_VALUE)) {
-            if (divisor.eq(ONE) || divisor.eq(NEG_ONE))
-                return MIN_VALUE;  // recall that -MIN_VALUE == MIN_VALUE
-            else if (divisor.eq(MIN_VALUE))
-                return ONE;
-            else {
-                // At this point, we have |other| >= 2, so |this/other| < |MIN_VALUE|.
-                var halfThis = this.shr(1);
-                approx = halfThis.div(divisor).shl(1);
-                if (approx.eq(ZERO)) {
-                    return divisor.isNegative() ? ONE : NEG_ONE;
-                } else {
-                    rem = this.sub(divisor.mul(approx));
-                    res = approx.add(rem.div(divisor));
-                    return res;
-                }
-            }
-        } else if (divisor.eq(MIN_VALUE))
-            return this.unsigned ? UZERO : ZERO;
-        if (this.isNegative()) {
-            if (divisor.isNegative())
-                return this.neg().div(divisor.neg());
-            return this.neg().div(divisor).neg();
-        } else if (divisor.isNegative())
-            return this.div(divisor.neg()).neg();
-        res = ZERO;
-    } else {
-        // The algorithm below has not been made for unsigned longs. It's therefore
-        // required to take special care of the MSB prior to running it.
-        if (!divisor.unsigned)
-            divisor = divisor.toUnsigned();
-        if (divisor.gt(this))
-            return UZERO;
-        if (divisor.gt(this.shru(1))) // 15 >>> 1 = 7 ; with divisor = 8 ; true
-            return UONE;
-        res = UZERO;
+    // We know the answer can't be zero... and actually, zero would cause
+    // infinite recursion since we would make no progress.
+    if (approxRes.isZero()) {
+      approxRes = ONE;
     }
 
-    // Repeat the following until the remainder is less than other:  find a
-    // floating-point that approximates remainder / other *from below*, add this
-    // into the result, and subtract it from the remainder.  It is critical that
-    // the approximate value is less than or equal to the real value so that the
-    // remainder never becomes negative.
-    rem = this;
-    while (rem.gte(divisor)) {
-        // Approximate the result of division. This may be a little greater or
-        // smaller than the actual value.
-        approx = Math.max(1, Math.floor(rem.toNumber() / divisor.toNumber()));
-
-        // We will tweak the approximate result by changing it in the 48-th digit or
-        // the smallest non-fractional digit, whichever is larger.
-        var log2 = Math.ceil(Math.log(approx) / Math.LN2),
-            delta = (log2 <= 48) ? 1 : pow_dbl(2, log2 - 48),
-
-        // Decrease the approximation until it is smaller than the remainder.  Note
-        // that if it is too large, the product overflows and is negative.
-            approxRes = fromNumber(approx),
-            approxRem = approxRes.mul(divisor);
-        while (approxRem.isNegative() || approxRem.gt(rem)) {
-            approx -= delta;
-            approxRes = fromNumber(approx, this.unsigned);
-            approxRem = approxRes.mul(divisor);
-        }
-
-        // We know the answer can't be zero... and actually, zero would cause
-        // infinite recursion since we would make no progress.
-        if (approxRes.isZero())
-            approxRes = ONE;
-
-        res = res.add(approxRes);
-        rem = rem.sub(approxRem);
-    }
-    return res;
+    res = res.add(approxRes);
+    rem = rem.sub(approxRem);
+  }
+  return res;
 };
 
 /**
@@ -1057,21 +1136,22 @@ LongPrototype.div = LongPrototype.divide;
  * @returns {!Long} Remainder
  */
 LongPrototype.modulo = function modulo(divisor) {
-    if (!isLong(divisor))
-        divisor = fromValue(divisor);
+  if (!isLong(divisor)) {
+    divisor = fromValue(divisor);
+  }
 
-    // use wasm support if present
-    if (wasm) {
-        var low = (this.unsigned ? wasm.rem_u : wasm.rem_s)(
-            this.low,
-            this.high,
-            divisor.low,
-            divisor.high
-        );
-        return fromBits(low, wasm.get_high(), this.unsigned);
-    }
+  // use wasm support if present
+  if (wasm) {
+    const low = (this.unsigned ? wasm.rem_u : wasm.rem_s)(
+      this.low,
+      this.high,
+      divisor.low,
+      divisor.high,
+    );
+    return fromBits(low, wasm.get_high(), this.unsigned);
+  }
 
-    return this.sub(this.div(divisor).mul(divisor));
+  return this.sub(this.div(divisor).mul(divisor));
 };
 
 /**
@@ -1095,7 +1175,7 @@ LongPrototype.rem = LongPrototype.modulo;
  * @returns {!Long}
  */
 LongPrototype.not = function not() {
-    return fromBits(~this.low, ~this.high, this.unsigned);
+  return fromBits(~this.low, ~this.high, this.unsigned);
 };
 
 /**
@@ -1104,9 +1184,10 @@ LongPrototype.not = function not() {
  * @returns {!Long}
  */
 LongPrototype.and = function and(other) {
-    if (!isLong(other))
-        other = fromValue(other);
-    return fromBits(this.low & other.low, this.high & other.high, this.unsigned);
+  if (!isLong(other)) {
+    other = fromValue(other);
+  }
+  return fromBits(this.low & other.low, this.high & other.high, this.unsigned);
 };
 
 /**
@@ -1115,9 +1196,10 @@ LongPrototype.and = function and(other) {
  * @returns {!Long}
  */
 LongPrototype.or = function or(other) {
-    if (!isLong(other))
-        other = fromValue(other);
-    return fromBits(this.low | other.low, this.high | other.high, this.unsigned);
+  if (!isLong(other)) {
+    other = fromValue(other);
+  }
+  return fromBits(this.low | other.low, this.high | other.high, this.unsigned);
 };
 
 /**
@@ -1126,9 +1208,10 @@ LongPrototype.or = function or(other) {
  * @returns {!Long}
  */
 LongPrototype.xor = function xor(other) {
-    if (!isLong(other))
-        other = fromValue(other);
-    return fromBits(this.low ^ other.low, this.high ^ other.high, this.unsigned);
+  if (!isLong(other)) {
+    other = fromValue(other);
+  }
+  return fromBits(this.low ^ other.low, this.high ^ other.high, this.unsigned);
 };
 
 /**
@@ -1137,14 +1220,20 @@ LongPrototype.xor = function xor(other) {
  * @returns {!Long} Shifted Long
  */
 LongPrototype.shiftLeft = function shiftLeft(numBits) {
-    if (isLong(numBits))
-        numBits = numBits.toInt();
-    if ((numBits &= 63) === 0)
-        return this;
-    else if (numBits < 32)
-        return fromBits(this.low << numBits, (this.high << numBits) | (this.low >>> (32 - numBits)), this.unsigned);
-    else
-        return fromBits(0, this.low << (numBits - 32), this.unsigned);
+  if (isLong(numBits)) {
+    numBits = numBits.toInt();
+  }
+  if ((numBits &= 63) === 0) {
+    return this;
+  } else if (numBits < 32) {
+    return fromBits(
+      this.low << numBits,
+      (this.high << numBits) | (this.low >>> (32 - numBits)),
+      this.unsigned,
+    );
+  } else {
+    return fromBits(0, this.low << (numBits - 32), this.unsigned);
+  }
 };
 
 /**
@@ -1161,14 +1250,24 @@ LongPrototype.shl = LongPrototype.shiftLeft;
  * @returns {!Long} Shifted Long
  */
 LongPrototype.shiftRight = function shiftRight(numBits) {
-    if (isLong(numBits))
-        numBits = numBits.toInt();
-    if ((numBits &= 63) === 0)
-        return this;
-    else if (numBits < 32)
-        return fromBits((this.low >>> numBits) | (this.high << (32 - numBits)), this.high >> numBits, this.unsigned);
-    else
-        return fromBits(this.high >> (numBits - 32), this.high >= 0 ? 0 : -1, this.unsigned);
+  if (isLong(numBits)) {
+    numBits = numBits.toInt();
+  }
+  if ((numBits &= 63) === 0) {
+    return this;
+  } else if (numBits < 32) {
+    return fromBits(
+      (this.low >>> numBits) | (this.high << (32 - numBits)),
+      this.high >> numBits,
+      this.unsigned,
+    );
+  } else {
+    return fromBits(
+      this.high >> (numBits - 32),
+      this.high >= 0 ? 0 : -1,
+      this.unsigned,
+    );
+  }
 };
 
 /**
@@ -1185,21 +1284,27 @@ LongPrototype.shr = LongPrototype.shiftRight;
  * @returns {!Long} Shifted Long
  */
 LongPrototype.shiftRightUnsigned = function shiftRightUnsigned(numBits) {
-    if (isLong(numBits))
-        numBits = numBits.toInt();
-    numBits &= 63;
-    if (numBits === 0)
-        return this;
-    else {
-        var high = this.high;
-        if (numBits < 32) {
-            var low = this.low;
-            return fromBits((low >>> numBits) | (high << (32 - numBits)), high >>> numBits, this.unsigned);
-        } else if (numBits === 32)
-            return fromBits(high, 0, this.unsigned);
-        else
-            return fromBits(high >>> (numBits - 32), 0, this.unsigned);
+  if (isLong(numBits)) {
+    numBits = numBits.toInt();
+  }
+  numBits &= 63;
+  if (numBits === 0) {
+    return this;
+  } else {
+    const high = this.high;
+    if (numBits < 32) {
+      const low = this.low;
+      return fromBits(
+        (low >>> numBits) | (high << (32 - numBits)),
+        high >>> numBits,
+        this.unsigned,
+      );
+    } else if (numBits === 32) {
+      return fromBits(high, 0, this.unsigned);
+    } else {
+      return fromBits(high >>> (numBits - 32), 0, this.unsigned);
     }
+  }
 };
 
 /**
@@ -1223,9 +1328,10 @@ LongPrototype.shr_u = LongPrototype.shiftRightUnsigned;
  * @returns {!Long} Signed long
  */
 LongPrototype.toSigned = function toSigned() {
-    if (!this.unsigned)
-        return this;
-    return fromBits(this.low, this.high, false);
+  if (!this.unsigned) {
+    return this;
+  }
+  return fromBits(this.low, this.high, false);
 };
 
 /**
@@ -1233,9 +1339,10 @@ LongPrototype.toSigned = function toSigned() {
  * @returns {!Long} Unsigned long
  */
 LongPrototype.toUnsigned = function toUnsigned() {
-    if (this.unsigned)
-        return this;
-    return fromBits(this.low, this.high, true);
+  if (this.unsigned) {
+    return this;
+  }
+  return fromBits(this.low, this.high, true);
 };
 
 /**
@@ -1244,7 +1351,7 @@ LongPrototype.toUnsigned = function toUnsigned() {
  * @returns {!Array.<number>} Byte representation
  */
 LongPrototype.toBytes = function toBytes(le) {
-    return le ? this.toBytesLE() : this.toBytesBE();
+  return le ? this.toBytesLE() : this.toBytesBE();
 };
 
 /**
@@ -1252,18 +1359,18 @@ LongPrototype.toBytes = function toBytes(le) {
  * @returns {!Array.<number>} Little endian byte representation
  */
 LongPrototype.toBytesLE = function toBytesLE() {
-    var hi = this.high,
-        lo = this.low;
-    return [
-        lo        & 0xff,
-        lo >>>  8 & 0xff,
-        lo >>> 16 & 0xff,
-        lo >>> 24       ,
-        hi        & 0xff,
-        hi >>>  8 & 0xff,
-        hi >>> 16 & 0xff,
-        hi >>> 24
-    ];
+  const hi = this.high;
+  const lo = this.low;
+  return [
+    lo & 0xff,
+    (lo >>> 8) & 0xff,
+    (lo >>> 16) & 0xff,
+    lo >>> 24,
+    hi & 0xff,
+    (hi >>> 8) & 0xff,
+    (hi >>> 16) & 0xff,
+    hi >>> 24,
+  ];
 };
 
 /**
@@ -1271,18 +1378,18 @@ LongPrototype.toBytesLE = function toBytesLE() {
  * @returns {!Array.<number>} Big endian byte representation
  */
 LongPrototype.toBytesBE = function toBytesBE() {
-    var hi = this.high,
-        lo = this.low;
-    return [
-        hi >>> 24       ,
-        hi >>> 16 & 0xff,
-        hi >>>  8 & 0xff,
-        hi        & 0xff,
-        lo >>> 24       ,
-        lo >>> 16 & 0xff,
-        lo >>>  8 & 0xff,
-        lo        & 0xff
-    ];
+  const hi = this.high;
+  const lo = this.low;
+  return [
+    hi >>> 24,
+    (hi >>> 16) & 0xff,
+    (hi >>> 8) & 0xff,
+    hi & 0xff,
+    lo >>> 24,
+    (lo >>> 16) & 0xff,
+    (lo >>> 8) & 0xff,
+    lo & 0xff,
+  ];
 };
 
 /**
@@ -1293,7 +1400,9 @@ LongPrototype.toBytesBE = function toBytesBE() {
  * @returns {Long} The corresponding Long value
  */
 Long.fromBytes = function fromBytes(bytes, unsigned, le) {
-    return le ? Long.fromBytesLE(bytes, unsigned) : Long.fromBytesBE(bytes, unsigned);
+  return le
+    ? Long.fromBytesLE(bytes, unsigned)
+    : Long.fromBytesBE(bytes, unsigned);
 };
 
 /**
@@ -1303,17 +1412,11 @@ Long.fromBytes = function fromBytes(bytes, unsigned, le) {
  * @returns {Long} The corresponding Long value
  */
 Long.fromBytesLE = function fromBytesLE(bytes, unsigned) {
-    return new Long(
-        bytes[0]       |
-        bytes[1] <<  8 |
-        bytes[2] << 16 |
-        bytes[3] << 24,
-        bytes[4]       |
-        bytes[5] <<  8 |
-        bytes[6] << 16 |
-        bytes[7] << 24,
-        unsigned
-    );
+  return new Long(
+    bytes[0] | (bytes[1] << 8) | (bytes[2] << 16) | (bytes[3] << 24),
+    bytes[4] | (bytes[5] << 8) | (bytes[6] << 16) | (bytes[7] << 24),
+    unsigned,
+  );
 };
 
 /**
@@ -1323,20 +1426,13 @@ Long.fromBytesLE = function fromBytesLE(bytes, unsigned) {
  * @returns {Long} The corresponding Long value
  */
 Long.fromBytesBE = function fromBytesBE(bytes, unsigned) {
-    return new Long(
-        bytes[4] << 24 |
-        bytes[5] << 16 |
-        bytes[6] <<  8 |
-        bytes[7],
-        bytes[0] << 24 |
-        bytes[1] << 16 |
-        bytes[2] <<  8 |
-        bytes[3],
-        unsigned
-    );
+  return new Long(
+    (bytes[4] << 24) | (bytes[5] << 16) | (bytes[6] << 8) | bytes[7],
+    (bytes[0] << 24) | (bytes[1] << 16) | (bytes[2] << 8) | bytes[3],
+    unsigned,
+  );
 };
 
-Long.prototype.toString = function toString()
-{
-    return "(low: " + this.low + ", high: " + this.high + ")";
-}
+Long.prototype.toString = function toString() {
+  return "(low: " + this.low + ", high: " + this.high + ")";
+};

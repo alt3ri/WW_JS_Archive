@@ -1,3 +1,1010 @@
-
-"use strict";var __decorate=this&&this.__decorate||function(t,i,e,s){var h,o=arguments.length,r=o<3?i:null===s?s=Object.getOwnPropertyDescriptor(i,e):s;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)r=Reflect.decorate(t,i,e,s);else for(var n=t.length-1;0<=n;n--)(h=t[n])&&(r=(o<3?h(r):3<o?h(i,e,r):h(i,e))||r);return 3<o&&r&&Object.defineProperty(i,e,r),r};Object.defineProperty(exports,"__esModule",{value:!0}),exports.EffectHandle=void 0;const puerts_1=require("puerts"),UE=require("ue"),Info_1=require("../../Core/Common/Info"),Log_1=require("../../Core/Common/Log"),Stats_1=require("../../Core/Common/Stats"),EffectEnvironment_1=require("../../Core/Effect/EffectEnvironment"),EntitySystem_1=require("../../Core/Entity/EntitySystem"),GameBudgetInterfaceController_1=require("../../Core/GameBudgetAllocator/GameBudgetInterfaceController"),PerformanceDecorators_1=require("../../Core/Performance/PerformanceDecorators"),TickSystem_1=require("../../Core/Tick/TickSystem"),TimerSystem_1=require("../../Core/Timer/TimerSystem"),Vector_1=require("../../Core/Utils/Math/Vector"),EventDefine_1=require("../Common/Event/EventDefine"),EventSystem_1=require("../Common/Event/EventSystem"),TimeUtil_1=require("../Common/TimeUtil"),GameBudgetAllocatorConfigCreator_1=require("../World/Define/GameBudgetAllocatorConfigCreator"),EEffectFlag_1=require("./EEffectFlag"),EffectActorHandle_1=require("./EffectActorHandle"),EffectModelNiagaraSpec_1=require("./EffectSpec/EffectModelNiagaraSpec"),EffectSystem_1=require("./EffectSystem"),MAX_LOOP_EFFECT_WITHOUT_OWNER_TIME_OF_EXISTENCE=600;class EffectHandleInitCache{constructor(){this.WorldContext=void 0,this.Path="",this.Reason="",this.AutoPlay=!1,this.BeforeInitCallback=void 0,this.Callback=void 0,this.BeforePlayCallback=void 0,this.EffectActorHandle=new EffectActorHandle_1.EffectActorHandle,this.StartTime=-1,this.TimeDiff=0}get Location(){return this.EffectActorHandle.GetActorLocation()}}class EffectHandle{constructor(){this.Id=0,this.BornFrameCount=void 0,this.HoldObjectId=0,this.Path="",this.nx=void 0,this.IsTickWhenPaused=!1,this.NiagaraParameter=void 0,this.ExtraState=-1,this.rbn=!1,this.DDn=!1,this.Parent=void 0,this.zCe=!1,this.CreateReason="",this.StopReason="",this.PlayReason="",this.ZCe=!1,this.IsExternalActor=!1,this.IsPendingStop=!1,this.IsPendingPlay=!1,this.CreateSource=0,this.SourceEntityId=void 0,this.IsPreview=!1,this.InContainer=!1,this.ege=void 0,this.EffectEnableRange=GameBudgetAllocatorConfigCreator_1.EFFECT_ENABLE_RANGE,this.tge=void 0,this.ige=0,this.gW=void 0,this.oge=void 0,this.cW=void 0,this.rge=void 0,this.nge=void 0,this.sge=void 0,this.mW=void 0,this.uW=void 0,this.age=void 0,this.InitCache=void 0,this.LifeTime=0,this.CreateTime=0,this.yW=void 0,this.hge=void 0,this.lge=void 0,this.ScheduledAfterTick=void 0,this._ge=-1,this.uge=0,this.cge=!1,this.mge=!1,this.TickSystemTick=t=>{this.Tick(t*TimeUtil_1.TimeUtil.Millisecond)},this.dge=!1,this.Cge=0,this.obn=!0,this.nbn=()=>{this.IsEffectValid&&this.OnVisibilityChanged(this.obn)},this.gge=!1,this.fge=(t,i)=>{this.IsEffectValid()&&2!==i&&4!==i&&(this.InContainer&&1===this.CreateSource&&Log_1.Log.CheckError()&&Log_1.Log.Error("RenderEffect",3,"回收到Lru的特效的actor被意外删除了",["Path",this.Path]),EffectSystem_1.EffectSystem.StopEffect(this,"[EffectHandle.OnActorDestroy] actor被意外销毁了",!0,!0))},this.OnCustomCheckOwner=void 0,this.pge=void 0}SetBornFrameCount(){this.BornFrameCount=UE.KismetSystemLibrary.GetFrameCount()}GetContext(){return this.GetRoot().nx}SetContext(t){this.nx=t}GetOwnerEntityId(){var t=this.GetContext();return t?t.EntityId:void 0}SetEffectParameterNiagara(t){t&&4&this.ige?this.tge?.SetEffectParameterNiagara(t):this.NiagaraParameter=t}SetEffectExtraState(t){4&this.ige?(this.ExtraState=t,this.tge?.SetExtraState(t)):this.ExtraState=t}get IgnoreVisibilityOptimize(){return(this.IsRoot()?this:this.GetRoot()).rbn}set IgnoreVisibilityOptimize(t){this.rbn!==t&&(t?(this.OnVisibilityChanged(!0,!1),this.rbn=t):(this.rbn=t,TimerSystem_1.TimerSystem.Next(this.nbn)))}get StoppingTime(){return this.DDn}set StoppingTime(t){this.nx?.SourceObject instanceof UE.BP_EffectActor_C&&this.IsRoot()&&this.DDn!==t&&(this.DDn=t,EffectSystem_1.EffectSystem.GlobalStoppingTime)&&this.GetEffectSpec()?.OnGlobalStoppingTimeChange(t)}OnGlobalStoppingTimeChange(t){this.StoppingTime&&this.GetEffectSpec()?.OnGlobalStoppingTimeChange(t)}GetRoot(){if(!this.Parent)return this;let t=this.Parent;for(;t.Parent;)t=t.Parent;return t}SetNotRecord(t){this.zCe=t}GetNotRecord(){return this.zCe}IsRoot(){return!this.Parent}IsEffectValid(){return!(128&this.ige||this.InContainer||this.IsPendingStop)}IsDestroy(){return!!(128&this.ige)}IsDone(){return!(128&this.ige||!(2&this.ige))}IsStop(){return this.tge?.GetStopFlag()??!1}IsPlaying(){return this.tge?.IsPlaying()??!1}get IsPendingInit(){return!(1&this.ige||void 0===this.InitCache||this.ZCe)}SetIsInitializing(t){this.ZCe=t}IsStopping(){return this.tge?.IsStopping()??!1}GetEffectData(){return this.tge?.GetEffectModel()}GetEffectType(){return this.tge.GetEffectType()}get CreateFromPlayerEffectPool(){return 2<=this.CreateSource&&this.CreateSource<=5}GetEffectActor(){return this.IsPendingInit?this.InitCache.EffectActorHandle:this.ege}GetSureEffectActor(){return this.ege}GetNiagaraComponent(){return this.IsPendingInit?this.InitCache.EffectActorHandle.NiagaraComponent:this.ege?.GetComponentByClass(UE.NiagaraComponent.StaticClass())}GetNiagaraComponents(){if(this.IsPendingInit)return this.InitCache.EffectActorHandle.NiagaraComponents;var i=this.ege?.K2_GetComponentsByClass(UE.NiagaraComponent.StaticClass()),e=new Array;if(i)for(let t=0;t<i.Num();t++)e.push(i.Get(t));return e}GetNiagaraParticleCount(){var t=this.GetNiagaraComponents();let i=0,e=0;if(t instanceof Array)for(const o of t){var s=(0,puerts_1.$ref)(void 0),h=(0,puerts_1.$ref)(void 0);UE.KuroRenderingRuntimeBPPluginBPLibrary.GetNiagaraParticleCount(o,s,h),i+=(0,puerts_1.$unref)(h),e+=(0,puerts_1.$unref)(s)}return[i,e]}SetEffectActor(t){this.IsRoot()?t?(this.ege=t)?.IsValid()&&t.IsA(UE.TsEffectActor_C.StaticClass())&&t.SetEffectHandle(this):(this.ege?.IsValid()&&this.ege.IsA(UE.TsEffectActor_C.StaticClass())&&this.ege.SetEffectHandle(void 0),this.ege=void 0):this.ege=t}GetEffectSpec(){return this.tge}SetEffectSpec(t){t?(this.tge=t)?.SetHandle(this):(this.tge?.SetHandle(void 0),this.tge=void 0)}GetTimeScale(){return this.GetEffectSpec().GetTimeScale()}GetGlobalTimeScale(){return this.GetEffectSpec().GetGlobalTimeScale()}SetTimeScale(t,i=!1){this.GetEffectSpec()?.SetTimeScale(t,i),this.IsPendingInit&&!this.GetIgnoreTimeScale()&&this.vge(t)}GetIgnoreTimeScale(){return this.tge.GetIgnoreTimeScale()}ClearFinishCallback(){this.age=void 0}AddFinishCallback(t){t&&(this.age||(this.age=new Set),this.age.has(t)||(EffectEnvironment_1.EffectEnvironment.UseLog&&Log_1.Log.CheckInfo()&&Log_1.Log.Info("RenderEffect",37,"特效框架:AddFinishCallback",["句柄Id",this.Id],["Path",this.Path]),this.age.add(t)))}RemoveFinishCallback(t){return!!t&&!!this.age&&this.age.delete(t)}Replay(){this.ige&=EEffectFlag_1.RESET_PLAY_FLAG,this.ige&=EEffectFlag_1.RESET_STOP_FLAG,this.ige&=EEffectFlag_1.RESET_PRESTOP_FLAG,this.Cge=0,this.tge.Replay(),this.OnCustomCheckOwner=void 0,this.DDn=!1,this.obn=!0}Play(t){16&this.ige||4&this.ige||(this.Cge=0,this.ige|=4,this.IsRoot()&&Info_1.Info.IsGameRunning()&&GameBudgetInterfaceController_1.GameBudgetInterfaceController.IsOpen&&!this.Sge&&this.RegisterTick(),this.tge.Play(t),this.ApplyEffectParameters(),0<this.ExtraState&&this.SetEffectExtraState(this.ExtraState))}PreStop(){8&this.ige||(this.ige|=8,this.tge.PreStop())}Stop(t,i){if(!this.IsRoot()&&i&&this.ExecuteStopCallback(),!(16&this.ige)){if(this.ige|=16,this.OnCustomCheckOwner=void 0,this.PreStop(),this.IsRoot()&&i){if(!this.IsExternalActor&&this.ege?.IsValid()&&!this.IsPreview&&(EffectEnvironment_1.EffectEnvironment.UseLog&&Log_1.Log.CheckInfo()&&Log_1.Log.Info("RenderEffect",37,"特效框架:EffectHandle Detach",["句柄Id",this.Id],["Path",this.Path]),this.ege.K2_DetachFromActor(),this.ege.SetActorHiddenInGame(!0),this.pge)){for(const e of this.pge)e.IsValid()&&e.K2_DetachFromActor(1,1,1);this.pge=void 0}Info_1.Info.IsGameRunning()&&GameBudgetInterfaceController_1.GameBudgetInterfaceController.IsOpen&&this.Sge&&this.UnregisterTick(),this.ExtraState=-1}this.IsPlaying()&&this.tge.Stop(t,i)}}OnEnterPool(){this.tge?.OnEnterPool()}ExecuteStopCallback(){if(this.age){EffectEnvironment_1.EffectEnvironment.UseLog&&Log_1.Log.CheckInfo()&&Log_1.Log.Info("RenderEffect",3,"特效框架:执行特效完成回调",["句柄Id",this.Id],["IsRoot",this.IsRoot()],["Path",this.Path],["Count",this.age.size]);for(const t of this.age)t(this.Id);this.ClearFinishCallback()}}PendingInit(t,i,e,s,h=!0,o,r,n){this.InitCache=new EffectHandleInitCache,this.InitCache.WorldContext=t,this.InitCache.Path=i,this.InitCache.Reason=e,this.InitCache.AutoPlay=h,this.InitCache.BeforeInitCallback=o,this.InitCache.Callback=r,this.InitCache.BeforePlayCallback=n,this.InitCache.EffectActorHandle.Init(s,i),h&&this.yge()}yge(){this.IsRoot()&&(this.InitCache.StartTime=EffectEnvironment_1.EffectEnvironment.GameTimeInSeconds,Info_1.Info.IsGameRunning()&&GameBudgetInterfaceController_1.GameBudgetInterfaceController.IsOpen&&!this.Sge&&this.RegisterTick(),this.GetEffectSpec()?.SetLifeCycle(this.LifeTime),this.GetEffectSpec()?.SetPlaying(!0))}vge(t){var i=EffectEnvironment_1.EffectEnvironment.GameTimeInSeconds-this.InitCache.StartTime;this.InitCache.TimeDiff+=i*t*this.GetGlobalTimeScale(),this.InitCache.StartTime=EffectEnvironment_1.EffectEnvironment.GameTimeInSeconds}InitEffectActorAfterPendingInit(){this.ege&&this.InitCache&&this.InitCache.EffectActorHandle?(this.InitCache.EffectActorHandle.InitEffectActor(this.ege,this),this.Sge&&void 0!==this.yW&&GameBudgetInterfaceController_1.GameBudgetInterfaceController.UpdateRegisterActor(this.lge,this.yW,this.ege)):Log_1.Log.CheckDebug()&&Log_1.Log.Debug("RenderEffect",37,"[EffectHandle]InitEffectActor Failed")}PlayEffectAfterPendingInit(){var t;this.InitCache.StartTime<0||(this.InitCache.AutoPlay||this.PlayEffect("PlayEffectAfterPendingInit"),0<(t=this.InitCache.TimeDiff+(EffectEnvironment_1.EffectEnvironment.GameTimeInSeconds-this.InitCache.StartTime)*this.GetTimeScale()*this.GetGlobalTimeScale())&&!this.tge.IsLoop&&this.ChaseFrame(t,!0))}ClearInitCache(){this.InitCache=void 0}get IsLoop(){return this.IsDone()&&this.tge?this.tge.IsLoop:this.LifeTime<0}async Init(t){if(!t)return Log_1.Log.CheckError()&&Log_1.Log.Error("RenderEffect",3,"EffectHandle执行Init失败，因为effectData无效。",["Path",this.Path]),0;Stats_1.Stat.Enable&&(this.cW=void 0,this.gW=void 0,this.oge=void 0,this.nge=void 0,this.rge=void 0,this.mW=void 0,this.sge=void 0,this.uW=void 0,EffectHandle.Ige||(EffectHandle.Ige=void 0,EffectHandle.Tge=void 0,EffectHandle.Mge=void 0,EffectHandle.Ege=void 0)),this.ige=1;t=this.tge.Init(t);return this.SetIsInitializing(!1),t}Start(){return this.ige|=2,!!this.tge.Start()&&(EffectEnvironment_1.EffectEnvironment.UseLog&&Log_1.Log.CheckInfo()&&Log_1.Log.Info("RenderEffect",3,"特效框架:特效加载成功",["句柄Id",this.Id],["Path",this.Path],["Location",this.GetEffectActor().K2_GetActorLocation()]),EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.LoadEffect,this.Id),!0)}End(){return this.OnEnterPool(),!(2&this.ige)||(32&this.ige?(Log_1.Log.CheckError()&&Log_1.Log.Error("RenderEffect",3,"重复执行End",["Path",this.Path]),!1):(this.ige|=32,this.tge.End()))}Clear(){return 64&this.ige?(Log_1.Log.CheckError()&&Log_1.Log.Error("RenderEffect",3,"重复执行Clear",["EffectHandle",this.constructor.name],["Path",this.Path]),!1):(this.IsRoot()&&this.ege?.IsValid()&&this.ege.OnEndPlay.Clear(),this.InitCache=void 0,this.gW=void 0,this.oge=void 0,this.rge=void 0,this.sge=void 0,this.mW=void 0,this.IsTickWhenPaused=!1,this.age=void 0,!!this.tge.Clear()&&(this.ige|=64,!0))}Destroy(){this.ige|=128,this.tge?.Destroy()}get Sge(){return void 0!==this.yW||void 0!==this.hge}RegisterTick(){if(!Info_1.Info.IsInCg())if(this.IsTickWhenPaused||1===this.tge.GetEffectType())this.hge=TickSystem_1.TickSystem.Add(this.TickSystemTick,"EffectHandle_"+this.Path+"_"+this.Id,0,!0);else{this.yW&&(Log_1.Log.CheckWarn()&&Log_1.Log.Warn("RenderEffect",25,"EffectHandle RegisterTick: 重复注册Tick",["EffectHandle",this.constructor.name],["Path",this.Path]),this.UnregisterTick());let t=void 0;t=(t=this.tge.NeedAlwaysTick()?GameBudgetAllocatorConfigCreator_1.GameBudgetAllocatorConfigCreator.TsAlwaysTickConfig:this.EffectEnableRange===GameBudgetAllocatorConfigCreator_1.EFFECT_ENABLE_RANGE?3===this.tge.GetEffectType()?GameBudgetAllocatorConfigCreator_1.GameBudgetAllocatorConfigCreator.TsEffectGroupConfig:0===this.tge.GetEffectType()?GameBudgetAllocatorConfigCreator_1.GameBudgetAllocatorConfigCreator.TsFightEffectGroupConfig:GameBudgetAllocatorConfigCreator_1.GameBudgetAllocatorConfigCreator.TsAlwaysTickConfig:GameBudgetAllocatorConfigCreator_1.GameBudgetAllocatorConfigCreator.GetEffectDynamicGroup(this.EffectEnableRange))||GameBudgetAllocatorConfigCreator_1.GameBudgetAllocatorConfigCreator.TsEffectGroupConfig,this.lge=t.GroupName,this.yW=GameBudgetInterfaceController_1.GameBudgetInterfaceController.RegisterTick(t.GroupName,t.SignificanceGroup,this,this.ege),this.GetEffectSpec()?.IsUseBoundsCalculateDistance()&&this.EffectEnableRange>GameBudgetAllocatorConfigCreator_1.EFFECT_USE_BOUNDS_RANGE&&GameBudgetInterfaceController_1.GameBudgetInterfaceController.SetUseBoundsCalculateDistance(t.GroupName,this.yW,!0)}}UnregisterTick(){this.hge?(TickSystem_1.TickSystem.Remove(this.hge.Id),this.hge=void 0):this.yW&&(GameBudgetInterfaceController_1.GameBudgetInterfaceController.UnregisterTick(this),this.yW=void 0)}ScheduledTick(t,i,e){this.Tick(t)}OnEnabledChange(t,i){this.IsRoot()&&t&&this.IsPendingInit&&EffectSystem_1.EffectSystem.InitHandleWhenEnable(this),EffectEnvironment_1.EffectEnvironment.UseLog&&Log_1.Log.CheckInfo()&&Log_1.Log.Info("RenderEffect",37,"特效框架:OnEnabledChange",["句柄Id",this.Id],["IsRoot",this.IsRoot()],["Path",this.Path],["Enable",t]),this.tge?.EnableChanged(t)}SeekDelta(t,i,e=!1){this.tge?.IsValid()?this.tge.SeekDelta(t,e,i):Log_1.Log.CheckInfo()&&Log_1.Log.Info("RenderEffect",37,"[EffectHandle]SeekDelta Failed",["handleId",this.Id])}SeekTo(t,i,e=!1){this.tge?.IsValid()?this.tge.SeekTo(t,e,i):Log_1.Log.CheckInfo()&&Log_1.Log.Info("RenderEffect",37,"[EffectHandle]SeekTo Failed",["handleId",this.Id])}ChaseFrame(t,i,e=!1){this.tge?.IsValid()?this.tge.ChaseFrame(t,e,i):Log_1.Log.CheckInfo()&&Log_1.Log.Info("RenderEffect",37,"[EffectHandle]ChaseFrame Failed",["handleId",this.Id])}SeekToTimeWithProcess(t,i,e=!1){this._ge=t,this.uge=i,this.cge=e,this.mge=!0}LocationProxyFunction(){if(this.IsPendingInit){var t=this.InitCache?.Location;if(t)return t;Log_1.Log.CheckWarn()&&Log_1.Log.Warn("RenderEffect",37,"LocationProxy is undefined",["handleId",this.Id],["path",this.InitCache?.Path])}return Vector_1.Vector.ZeroVector}ApplyEffectParameters(){this.NiagaraParameter&&(this.tge.SetEffectParameterNiagara(this.NiagaraParameter),this.NiagaraParameter=void 0)}Tick(i){if(!(16&this.ige)&&this.IsDone())if(this.InDebugMode())this.DebugTick(i);else if(this.ege?.IsValid()){let t=i;if(this.tge?.IsValid()){if(this.IsRoot()&&!this.IgnoreVisibilityOptimize&&this.tge.NeedVisibilityTest()&&EffectSystem_1.EffectSystem.OpenVisibilityOptimize){if((t=this.Lge(i))<0)return void this.tge.TickNeedAlwaysTick(i);t>i&&this.tge.SeekTimeWithoutAlwaysTick(t,!0)}if(this.dge)return void this.Dge(i);this.tge.Tick(i)}t!==i&&(t+=i)}}RegisterActorDestroy(){this.IsRoot()&&this.ege.OnEndPlay.Add(this.fge)}FreezeEffect(t){this.dge=t}Dge(t){let i=t;var e,s;this.mge?(e=this.GetEffectSpec())&&(s=this._ge-e.PassTime,0<this.uge&&(i=this.uge),Math.abs(s)<i?(e.SeekTo(this._ge,!0,!1,t),this.mge=!1):(i*=Math.sign(s),e.SeekDelta(i,!0,!1,t))):this.cge&&this.GetEffectSpec()?.SeekTo(this._ge,!0,!1,t)}PlayEffect(t){t?t.length<EffectSystem_1.EFFECT_REASON_LENGTH_LIMIT?Log_1.Log.CheckError()&&Log_1.Log.Error("Entity",3,"PlayEffect的Reason字符串长度必须大于等于限制字符数量",["Reason",t],["限制的字符数量",EffectSystem_1.EFFECT_REASON_LENGTH_LIMIT]):(this.PlayReason=t,this.IsPendingInit?this.yge():this.IsDone()?(EffectEnvironment_1.EffectEnvironment.UseLog&&Log_1.Log.CheckInfo()&&Log_1.Log.Info("RenderEffect",3,"特效框架:播放特效",["句柄Id",this.Id],["IsRoot",this.IsRoot()],["Path",this.Path],["Reason",t]),this.IsLoop&&this.IsRoot()&&(this.nx&&(this.nx.EntityId||this.nx.SourceObject)||(Log_1.Log.CheckWarn()&&Log_1.Log.Warn("Render",37,"特效框架:对应循环特效没有指定Owner,设置保底生命周期，保底时间为10分钟",["句柄Id",this.Id],["Path",this.Path],["CreateReason",this.CreateReason]),this.GetEffectSpec()?.SetLifeCycle(MAX_LOOP_EFFECT_WITHOUT_OWNER_TIME_OF_EXISTENCE))),this.Play(t)):this.IsPendingPlay=!0):Log_1.Log.CheckError()&&Log_1.Log.Error("Entity",3,"PlayEffect的Reason不能使用undefined",["Reason",t])}StopEffect(t,i=!1,e=!1){t?t.length<EffectSystem_1.EFFECT_REASON_LENGTH_LIMIT?Log_1.Log.CheckError()&&Log_1.Log.Error("Entity",3,"StopEffect的Reason字符串长度必须大于等于限制字符数量",["Reason",t],["限制的字符数量",EffectSystem_1.EFFECT_REASON_LENGTH_LIMIT],["Path",this.Path]):this.IsEffectValid()?this.IsRoot()?!this.IsPendingInit&&!this.GetRoot().IsDone()||i?EffectSystem_1.EffectSystem.StopEffect(this,t,!0,e):(this.tge.SetPlaying(!1),this.tge.SetStopping(!0)):Log_1.Log.CheckError()&&Log_1.Log.Error("Entity",3,"子特效不能调用StopEffect",["Reason",t],["Path",this.Path]):Log_1.Log.CheckError()&&Log_1.Log.Error("Entity",3,"EffectHandle已失效，不能调用StopEffect()",["Reason",t],["Path",this.Path]):Log_1.Log.CheckError()&&Log_1.Log.Error("Entity",3,"StopEffect的Reason不能使用undefined",["Reason",t],["Path",this.Path])}DestroyEffect(t,i){t?t.length<EffectSystem_1.EFFECT_REASON_LENGTH_LIMIT?Log_1.Log.CheckError()&&Log_1.Log.Error("Entity",3,"DestroyEffect的Reason字符串长度必须大于等于限制字符数量",["Reason",t],["限制的字符数量",EffectSystem_1.EFFECT_REASON_LENGTH_LIMIT],["Path",this.Path]):this.IsEffectValid()?this.IsRoot()?EffectSystem_1.EffectSystem.StopEffect(this,t,!0,i):Log_1.Log.CheckError()&&Log_1.Log.Error("Entity",3,"子特效不能调用DestroyEffect",["Reason",t],["Path",this.Path]):Log_1.Log.CheckError()&&Log_1.Log.Error("Entity",3,"EffectHandle已失效，不能调用DestroyEffect()",["Reason",t],["Path",this.Path]):Log_1.Log.CheckError()&&Log_1.Log.Error("Entity",3,"DestroyEffect的Reason不能使用undefined",["Reason",t],["Path",this.Path])}get HandleVisible(){return this.obn}OnVisibilityChanged(t,i=!0){this.tge?.IsValid()?(i&&(this.obn=t),this.tge.VisibilityChanged(t)):Log_1.Log.CheckWarn()&&Log_1.Log.Warn("RenderEffect",37,"特效框架:OnVisibilityChanged Failed",["handleId",this.Id])}OnGlobalTimeScaleChange(){this.GetEffectSpec()?.OnGlobalTimeScaleChange()}OnWasRecentlyRenderedOnScreenChange(t){EffectSystem_1.EffectSystem.OpenVisibilityOptimize&&this.tge?.NeedVisibilityTest()&&(t||(this.Cge=0),this.OnVisibilityChanged(t))}Lge(t){var i,e;return this.tge?.IsReallyPlaying()?(i=t*(this.GetIgnoreTimeScale()?1:this.GetTimeScale()*this.GetGlobalTimeScale()),this.tge.IsVisible()?!this.tge.IsLoop&&this.Cge>t?(e=this.Cge,this.Cge=0,e):t:(this.Cge+=i,-1)):t}get DebugUpdate(){return this.gge}set DebugUpdate(t){Info_1.Info.IsBuildDevelopmentOrDebug&&(this.gge=t)}InDebugMode(){return this.DebugUpdate}DebugTick(t){this.NiagaraDebugTick(t),!this.tge?.IsValid()||this.tge instanceof EffectModelNiagaraSpec_1.EffectModelNiagaraSpec||this.tge.Tick(t)}NiagaraDebugTick(t){this.tge?.IsValid()&&this.tge instanceof EffectModelNiagaraSpec_1.EffectModelNiagaraSpec&&(this.tge.SetNiagaraSolo(!0),this.tge.DebugTick(t))}OnPlayFinished(){Info_1.Info.IsGameRunning()?EffectSystem_1.EffectSystem.AddRemoveHandle(this,"[EffectLifeTime.PlayFinished] 播放完成"):EffectSystem_1.EffectSystem.StopEffect(this,"[EffectLifeTime.PlayFinished] 播放完成",!0)}CheckOwner(){if(this.OnCustomCheckOwner)return this.OnCustomCheckOwner(this.Id);if(this.nx){if(this.nx.EntityId)if(!EntitySystem_1.EntitySystem.Get(this.nx.EntityId)?.Valid)return!1;if(this.nx.SourceObject&&!this.nx.SourceObject.IsValid())return!1}return!0}AttachToEffectSkeletalMesh(t,i,e){this.IsPendingInit?this.InitCache?.EffectActorHandle.SetBeAttached(t,i,e):this.ege?this.ExecuteAttachToEffectSkeletalMesh(t,i,e):Log_1.Log.CheckWarn()&&Log_1.Log.Warn("RenderEffect",37,"特效框架: 调用AttachToEffectActor时，EffectActor为空")}ExecuteAttachToEffectSkeletalMesh(t,i,e){var s;t.IsValid()&&(this.pge||(this.pge=new Array),s=this.ege?.GetComponentByClass(UE.SkeletalMeshComponent.StaticClass()))&&(this.pge.push(t),t.K2_AttachToComponent(s,i,e,e,e,!1))}GetGlobalStoppingTime(){return EffectSystem_1.EffectSystem.GlobalStoppingTime}GetGlobalStoppingPlayTime(){return EffectSystem_1.EffectSystem.GlobalStoppingPlayTime}}EffectHandle.Ige=void 0,EffectHandle.Tge=void 0,EffectHandle.Mge=void 0,EffectHandle.Ege=void 0,__decorate([(0,PerformanceDecorators_1.TickEffectPerformanceWithEntity)()],EffectHandle.prototype,"Tick",null),__decorate([(0,PerformanceDecorators_1.TickEffectPerformanceEx)(!0)],EffectHandle.prototype,"DebugTick",null),__decorate([(0,PerformanceDecorators_1.TickPerformanceEx)("NiagaraDebugTick",!0)],EffectHandle.prototype,"NiagaraDebugTick",null),exports.EffectHandle=EffectHandle;
-//# sourceMappingURL=EffectHandle.js.map
+"use strict";
+const __decorate =
+  (this && this.__decorate) ||
+  function (t, i, e, s) {
+    let h;
+    const o = arguments.length;
+    let r =
+      o < 3 ? i : s === null ? (s = Object.getOwnPropertyDescriptor(i, e)) : s;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+      r = Reflect.decorate(t, i, e, s);
+    else
+      for (let n = t.length - 1; n >= 0; n--)
+        (h = t[n]) && (r = (o < 3 ? h(r) : o > 3 ? h(i, e, r) : h(i, e)) || r);
+    return o > 3 && r && Object.defineProperty(i, e, r), r;
+  };
+Object.defineProperty(exports, "__esModule", { value: !0 }),
+  (exports.EffectHandle = void 0);
+const puerts_1 = require("puerts");
+const UE = require("ue");
+const Info_1 = require("../../Core/Common/Info");
+const Log_1 = require("../../Core/Common/Log");
+const Stats_1 = require("../../Core/Common/Stats");
+const EffectEnvironment_1 = require("../../Core/Effect/EffectEnvironment");
+const EntitySystem_1 = require("../../Core/Entity/EntitySystem");
+const GameBudgetInterfaceController_1 = require("../../Core/GameBudgetAllocator/GameBudgetInterfaceController");
+const PerformanceDecorators_1 = require("../../Core/Performance/PerformanceDecorators");
+const TickSystem_1 = require("../../Core/Tick/TickSystem");
+const TimerSystem_1 = require("../../Core/Timer/TimerSystem");
+const Vector_1 = require("../../Core/Utils/Math/Vector");
+const EventDefine_1 = require("../Common/Event/EventDefine");
+const EventSystem_1 = require("../Common/Event/EventSystem");
+const TimeUtil_1 = require("../Common/TimeUtil");
+const GameBudgetAllocatorConfigCreator_1 = require("../World/Define/GameBudgetAllocatorConfigCreator");
+const EEffectFlag_1 = require("./EEffectFlag");
+const EffectActorHandle_1 = require("./EffectActorHandle");
+const EffectModelNiagaraSpec_1 = require("./EffectSpec/EffectModelNiagaraSpec");
+const EffectSystem_1 = require("./EffectSystem");
+const MAX_LOOP_EFFECT_WITHOUT_OWNER_TIME_OF_EXISTENCE = 600;
+class EffectHandleInitCache {
+  constructor() {
+    (this.WorldContext = void 0),
+      (this.Path = ""),
+      (this.Reason = ""),
+      (this.AutoPlay = !1),
+      (this.BeforeInitCallback = void 0),
+      (this.Callback = void 0),
+      (this.BeforePlayCallback = void 0),
+      (this.EffectActorHandle = new EffectActorHandle_1.EffectActorHandle()),
+      (this.StartTime = -1),
+      (this.TimeDiff = 0);
+  }
+  get Location() {
+    return this.EffectActorHandle.GetActorLocation();
+  }
+}
+class EffectHandle {
+  constructor() {
+    (this.Id = 0),
+      (this.BornFrameCount = void 0),
+      (this.HoldObjectId = 0),
+      (this.Path = ""),
+      (this.nx = void 0),
+      (this.IsTickWhenPaused = !1),
+      (this.NiagaraParameter = void 0),
+      (this.ExtraState = -1),
+      (this.rbn = !1),
+      (this.DDn = !1),
+      (this.Parent = void 0),
+      (this.zCe = !1),
+      (this.CreateReason = ""),
+      (this.StopReason = ""),
+      (this.PlayReason = ""),
+      (this.ZCe = !1),
+      (this.IsExternalActor = !1),
+      (this.IsPendingStop = !1),
+      (this.IsPendingPlay = !1),
+      (this.CreateSource = 0),
+      (this.SourceEntityId = void 0),
+      (this.IsPreview = !1),
+      (this.InContainer = !1),
+      (this.ege = void 0),
+      (this.EffectEnableRange =
+        GameBudgetAllocatorConfigCreator_1.EFFECT_ENABLE_RANGE),
+      (this.tge = void 0),
+      (this.ige = 0),
+      (this.gW = void 0),
+      (this.oge = void 0),
+      (this.cW = void 0),
+      (this.rge = void 0),
+      (this.nge = void 0),
+      (this.sge = void 0),
+      (this.mW = void 0),
+      (this.uW = void 0),
+      (this.age = void 0),
+      (this.InitCache = void 0),
+      (this.LifeTime = 0),
+      (this.CreateTime = 0),
+      (this.yW = void 0),
+      (this.hge = void 0),
+      (this.lge = void 0),
+      (this.ScheduledAfterTick = void 0),
+      (this._ge = -1),
+      (this.uge = 0),
+      (this.cge = !1),
+      (this.mge = !1),
+      (this.TickSystemTick = (t) => {
+        this.Tick(t * TimeUtil_1.TimeUtil.Millisecond);
+      }),
+      (this.dge = !1),
+      (this.Cge = 0),
+      (this.obn = !0),
+      (this.nbn = () => {
+        this.IsEffectValid && this.OnVisibilityChanged(this.obn);
+      }),
+      (this.gge = !1),
+      (this.fge = (t, i) => {
+        this.IsEffectValid() &&
+          i !== 2 &&
+          i !== 4 &&
+          (this.InContainer &&
+            this.CreateSource === 1 &&
+            Log_1.Log.CheckError() &&
+            Log_1.Log.Error(
+              "RenderEffect",
+              3,
+              "回收到Lru的特效的actor被意外删除了",
+              ["Path", this.Path],
+            ),
+          EffectSystem_1.EffectSystem.StopEffect(
+            this,
+            "[EffectHandle.OnActorDestroy] actor被意外销毁了",
+            !0,
+            !0,
+          ));
+      }),
+      (this.OnCustomCheckOwner = void 0),
+      (this.pge = void 0);
+  }
+  SetBornFrameCount() {
+    this.BornFrameCount = UE.KismetSystemLibrary.GetFrameCount();
+  }
+  GetContext() {
+    return this.GetRoot().nx;
+  }
+  SetContext(t) {
+    this.nx = t;
+  }
+  GetOwnerEntityId() {
+    const t = this.GetContext();
+    return t ? t.EntityId : void 0;
+  }
+  SetEffectParameterNiagara(t) {
+    t && 4 & this.ige
+      ? this.tge?.SetEffectParameterNiagara(t)
+      : (this.NiagaraParameter = t);
+  }
+  SetEffectExtraState(t) {
+    4 & this.ige
+      ? ((this.ExtraState = t), this.tge?.SetExtraState(t))
+      : (this.ExtraState = t);
+  }
+  get IgnoreVisibilityOptimize() {
+    return (this.IsRoot() ? this : this.GetRoot()).rbn;
+  }
+  set IgnoreVisibilityOptimize(t) {
+    this.rbn !== t &&
+      (t
+        ? (this.OnVisibilityChanged(!0, !1), (this.rbn = t))
+        : ((this.rbn = t), TimerSystem_1.TimerSystem.Next(this.nbn)));
+  }
+  get StoppingTime() {
+    return this.DDn;
+  }
+  set StoppingTime(t) {
+    this.nx?.SourceObject instanceof UE.BP_EffectActor_C &&
+      this.IsRoot() &&
+      this.DDn !== t &&
+      ((this.DDn = t), EffectSystem_1.EffectSystem.GlobalStoppingTime) &&
+      this.GetEffectSpec()?.OnGlobalStoppingTimeChange(t);
+  }
+  OnGlobalStoppingTimeChange(t) {
+    this.StoppingTime && this.GetEffectSpec()?.OnGlobalStoppingTimeChange(t);
+  }
+  GetRoot() {
+    if (!this.Parent) return this;
+    let t = this.Parent;
+    for (; t.Parent; ) t = t.Parent;
+    return t;
+  }
+  SetNotRecord(t) {
+    this.zCe = t;
+  }
+  GetNotRecord() {
+    return this.zCe;
+  }
+  IsRoot() {
+    return !this.Parent;
+  }
+  IsEffectValid() {
+    return !(128 & this.ige || this.InContainer || this.IsPendingStop);
+  }
+  IsDestroy() {
+    return !!(128 & this.ige);
+  }
+  IsDone() {
+    return !(128 & this.ige || !(2 & this.ige));
+  }
+  IsStop() {
+    return this.tge?.GetStopFlag() ?? !1;
+  }
+  IsPlaying() {
+    return this.tge?.IsPlaying() ?? !1;
+  }
+  get IsPendingInit() {
+    return !(1 & this.ige || void 0 === this.InitCache || this.ZCe);
+  }
+  SetIsInitializing(t) {
+    this.ZCe = t;
+  }
+  IsStopping() {
+    return this.tge?.IsStopping() ?? !1;
+  }
+  GetEffectData() {
+    return this.tge?.GetEffectModel();
+  }
+  GetEffectType() {
+    return this.tge.GetEffectType();
+  }
+  get CreateFromPlayerEffectPool() {
+    return this.CreateSource >= 2 && this.CreateSource <= 5;
+  }
+  GetEffectActor() {
+    return this.IsPendingInit ? this.InitCache.EffectActorHandle : this.ege;
+  }
+  GetSureEffectActor() {
+    return this.ege;
+  }
+  GetNiagaraComponent() {
+    return this.IsPendingInit
+      ? this.InitCache.EffectActorHandle.NiagaraComponent
+      : this.ege?.GetComponentByClass(UE.NiagaraComponent.StaticClass());
+  }
+  GetNiagaraComponents() {
+    if (this.IsPendingInit)
+      return this.InitCache.EffectActorHandle.NiagaraComponents;
+    const i = this.ege?.K2_GetComponentsByClass(
+      UE.NiagaraComponent.StaticClass(),
+    );
+    const e = new Array();
+    if (i) for (let t = 0; t < i.Num(); t++) e.push(i.Get(t));
+    return e;
+  }
+  GetNiagaraParticleCount() {
+    const t = this.GetNiagaraComponents();
+    let i = 0;
+    let e = 0;
+    if (t instanceof Array)
+      for (const o of t) {
+        const s = (0, puerts_1.$ref)(void 0);
+        const h = (0, puerts_1.$ref)(void 0);
+        UE.KuroRenderingRuntimeBPPluginBPLibrary.GetNiagaraParticleCount(
+          o,
+          s,
+          h,
+        ),
+          (i += (0, puerts_1.$unref)(h)),
+          (e += (0, puerts_1.$unref)(s));
+      }
+    return [i, e];
+  }
+  SetEffectActor(t) {
+    this.IsRoot()
+      ? t
+        ? (this.ege = t)?.IsValid() &&
+          t.IsA(UE.TsEffectActor_C.StaticClass()) &&
+          t.SetEffectHandle(this)
+        : (this.ege?.IsValid() &&
+            this.ege.IsA(UE.TsEffectActor_C.StaticClass()) &&
+            this.ege.SetEffectHandle(void 0),
+          (this.ege = void 0))
+      : (this.ege = t);
+  }
+  GetEffectSpec() {
+    return this.tge;
+  }
+  SetEffectSpec(t) {
+    t
+      ? (this.tge = t)?.SetHandle(this)
+      : (this.tge?.SetHandle(void 0), (this.tge = void 0));
+  }
+  GetTimeScale() {
+    return this.GetEffectSpec().GetTimeScale();
+  }
+  GetGlobalTimeScale() {
+    return this.GetEffectSpec().GetGlobalTimeScale();
+  }
+  SetTimeScale(t, i = !1) {
+    this.GetEffectSpec()?.SetTimeScale(t, i),
+      this.IsPendingInit && !this.GetIgnoreTimeScale() && this.vge(t);
+  }
+  GetIgnoreTimeScale() {
+    return this.tge.GetIgnoreTimeScale();
+  }
+  ClearFinishCallback() {
+    this.age = void 0;
+  }
+  AddFinishCallback(t) {
+    t &&
+      (this.age || (this.age = new Set()),
+      this.age.has(t) ||
+        (EffectEnvironment_1.EffectEnvironment.UseLog &&
+          Log_1.Log.CheckInfo() &&
+          Log_1.Log.Info(
+            "RenderEffect",
+            37,
+            "特效框架:AddFinishCallback",
+            ["句柄Id", this.Id],
+            ["Path", this.Path],
+          ),
+        this.age.add(t)));
+  }
+  RemoveFinishCallback(t) {
+    return !!t && !!this.age && this.age.delete(t);
+  }
+  Replay() {
+    (this.ige &= EEffectFlag_1.RESET_PLAY_FLAG),
+      (this.ige &= EEffectFlag_1.RESET_STOP_FLAG),
+      (this.ige &= EEffectFlag_1.RESET_PRESTOP_FLAG),
+      (this.Cge = 0),
+      this.tge.Replay(),
+      (this.OnCustomCheckOwner = void 0),
+      (this.DDn = !1),
+      (this.obn = !0);
+  }
+  Play(t) {
+    16 & this.ige ||
+      4 & this.ige ||
+      ((this.Cge = 0),
+      (this.ige |= 4),
+      this.IsRoot() &&
+        Info_1.Info.IsGameRunning() &&
+        GameBudgetInterfaceController_1.GameBudgetInterfaceController.IsOpen &&
+        !this.Sge &&
+        this.RegisterTick(),
+      this.tge.Play(t),
+      this.ApplyEffectParameters(),
+      this.ExtraState > 0 && this.SetEffectExtraState(this.ExtraState));
+  }
+  PreStop() {
+    8 & this.ige || ((this.ige |= 8), this.tge.PreStop());
+  }
+  Stop(t, i) {
+    if ((!this.IsRoot() && i && this.ExecuteStopCallback(), !(16 & this.ige))) {
+      if (
+        ((this.ige |= 16),
+        (this.OnCustomCheckOwner = void 0),
+        this.PreStop(),
+        this.IsRoot() && i)
+      ) {
+        if (
+          !this.IsExternalActor &&
+          this.ege?.IsValid() &&
+          !this.IsPreview &&
+          (EffectEnvironment_1.EffectEnvironment.UseLog &&
+            Log_1.Log.CheckInfo() &&
+            Log_1.Log.Info(
+              "RenderEffect",
+              37,
+              "特效框架:EffectHandle Detach",
+              ["句柄Id", this.Id],
+              ["Path", this.Path],
+            ),
+          this.ege.K2_DetachFromActor(),
+          this.ege.SetActorHiddenInGame(!0),
+          this.pge)
+        ) {
+          for (const e of this.pge)
+            e.IsValid() && e.K2_DetachFromActor(1, 1, 1);
+          this.pge = void 0;
+        }
+        Info_1.Info.IsGameRunning() &&
+          GameBudgetInterfaceController_1.GameBudgetInterfaceController
+            .IsOpen &&
+          this.Sge &&
+          this.UnregisterTick(),
+          (this.ExtraState = -1);
+      }
+      this.IsPlaying() && this.tge.Stop(t, i);
+    }
+  }
+  OnEnterPool() {
+    this.tge?.OnEnterPool();
+  }
+  ExecuteStopCallback() {
+    if (this.age) {
+      EffectEnvironment_1.EffectEnvironment.UseLog &&
+        Log_1.Log.CheckInfo() &&
+        Log_1.Log.Info(
+          "RenderEffect",
+          3,
+          "特效框架:执行特效完成回调",
+          ["句柄Id", this.Id],
+          ["IsRoot", this.IsRoot()],
+          ["Path", this.Path],
+          ["Count", this.age.size],
+        );
+      for (const t of this.age) t(this.Id);
+      this.ClearFinishCallback();
+    }
+  }
+  PendingInit(t, i, e, s, h = !0, o, r, n) {
+    (this.InitCache = new EffectHandleInitCache()),
+      (this.InitCache.WorldContext = t),
+      (this.InitCache.Path = i),
+      (this.InitCache.Reason = e),
+      (this.InitCache.AutoPlay = h),
+      (this.InitCache.BeforeInitCallback = o),
+      (this.InitCache.Callback = r),
+      (this.InitCache.BeforePlayCallback = n),
+      this.InitCache.EffectActorHandle.Init(s, i),
+      h && this.yge();
+  }
+  yge() {
+    this.IsRoot() &&
+      ((this.InitCache.StartTime =
+        EffectEnvironment_1.EffectEnvironment.GameTimeInSeconds),
+      Info_1.Info.IsGameRunning() &&
+        GameBudgetInterfaceController_1.GameBudgetInterfaceController.IsOpen &&
+        !this.Sge &&
+        this.RegisterTick(),
+      this.GetEffectSpec()?.SetLifeCycle(this.LifeTime),
+      this.GetEffectSpec()?.SetPlaying(!0));
+  }
+  vge(t) {
+    const i =
+      EffectEnvironment_1.EffectEnvironment.GameTimeInSeconds -
+      this.InitCache.StartTime;
+    (this.InitCache.TimeDiff += i * t * this.GetGlobalTimeScale()),
+      (this.InitCache.StartTime =
+        EffectEnvironment_1.EffectEnvironment.GameTimeInSeconds);
+  }
+  InitEffectActorAfterPendingInit() {
+    this.ege && this.InitCache && this.InitCache.EffectActorHandle
+      ? (this.InitCache.EffectActorHandle.InitEffectActor(this.ege, this),
+        this.Sge &&
+          void 0 !== this.yW &&
+          GameBudgetInterfaceController_1.GameBudgetInterfaceController.UpdateRegisterActor(
+            this.lge,
+            this.yW,
+            this.ege,
+          ))
+      : Log_1.Log.CheckDebug() &&
+        Log_1.Log.Debug(
+          "RenderEffect",
+          37,
+          "[EffectHandle]InitEffectActor Failed",
+        );
+  }
+  PlayEffectAfterPendingInit() {
+    let t;
+    this.InitCache.StartTime < 0 ||
+      (this.InitCache.AutoPlay || this.PlayEffect("PlayEffectAfterPendingInit"),
+      (t =
+        this.InitCache.TimeDiff +
+        (EffectEnvironment_1.EffectEnvironment.GameTimeInSeconds -
+          this.InitCache.StartTime) *
+          this.GetTimeScale() *
+          this.GetGlobalTimeScale()) > 0 &&
+        !this.tge.IsLoop &&
+        this.ChaseFrame(t, !0));
+  }
+  ClearInitCache() {
+    this.InitCache = void 0;
+  }
+  get IsLoop() {
+    return this.IsDone() && this.tge ? this.tge.IsLoop : this.LifeTime < 0;
+  }
+  async Init(t) {
+    if (!t)
+      return (
+        Log_1.Log.CheckError() &&
+          Log_1.Log.Error(
+            "RenderEffect",
+            3,
+            "EffectHandle执行Init失败，因为effectData无效。",
+            ["Path", this.Path],
+          ),
+        0
+      );
+    Stats_1.Stat.Enable &&
+      ((this.cW = void 0),
+      (this.gW = void 0),
+      (this.oge = void 0),
+      (this.nge = void 0),
+      (this.rge = void 0),
+      (this.mW = void 0),
+      (this.sge = void 0),
+      (this.uW = void 0),
+      EffectHandle.Ige ||
+        ((EffectHandle.Ige = void 0),
+        (EffectHandle.Tge = void 0),
+        (EffectHandle.Mge = void 0),
+        (EffectHandle.Ege = void 0))),
+      (this.ige = 1);
+    t = this.tge.Init(t);
+    return this.SetIsInitializing(!1), t;
+  }
+  Start() {
+    return (
+      (this.ige |= 2),
+      !!this.tge.Start() &&
+        (EffectEnvironment_1.EffectEnvironment.UseLog &&
+          Log_1.Log.CheckInfo() &&
+          Log_1.Log.Info(
+            "RenderEffect",
+            3,
+            "特效框架:特效加载成功",
+            ["句柄Id", this.Id],
+            ["Path", this.Path],
+            ["Location", this.GetEffectActor().K2_GetActorLocation()],
+          ),
+        EventSystem_1.EventSystem.Emit(
+          EventDefine_1.EEventName.LoadEffect,
+          this.Id,
+        ),
+        !0)
+    );
+  }
+  End() {
+    return (
+      this.OnEnterPool(),
+      !(2 & this.ige) ||
+        (32 & this.ige
+          ? (Log_1.Log.CheckError() &&
+              Log_1.Log.Error("RenderEffect", 3, "重复执行End", [
+                "Path",
+                this.Path,
+              ]),
+            !1)
+          : ((this.ige |= 32), this.tge.End()))
+    );
+  }
+  Clear() {
+    return 64 & this.ige
+      ? (Log_1.Log.CheckError() &&
+          Log_1.Log.Error(
+            "RenderEffect",
+            3,
+            "重复执行Clear",
+            ["EffectHandle", this.constructor.name],
+            ["Path", this.Path],
+          ),
+        !1)
+      : (this.IsRoot() && this.ege?.IsValid() && this.ege.OnEndPlay.Clear(),
+        (this.InitCache = void 0),
+        (this.gW = void 0),
+        (this.oge = void 0),
+        (this.rge = void 0),
+        (this.sge = void 0),
+        (this.mW = void 0),
+        (this.IsTickWhenPaused = !1),
+        (this.age = void 0),
+        !!this.tge.Clear() && ((this.ige |= 64), !0));
+  }
+  Destroy() {
+    (this.ige |= 128), this.tge?.Destroy();
+  }
+  get Sge() {
+    return void 0 !== this.yW || void 0 !== this.hge;
+  }
+  RegisterTick() {
+    if (!Info_1.Info.IsInCg())
+      if (this.IsTickWhenPaused || this.tge.GetEffectType() === 1)
+        this.hge = TickSystem_1.TickSystem.Add(
+          this.TickSystemTick,
+          "EffectHandle_" + this.Path + "_" + this.Id,
+          0,
+          !0,
+        );
+      else {
+        this.yW &&
+          (Log_1.Log.CheckWarn() &&
+            Log_1.Log.Warn(
+              "RenderEffect",
+              25,
+              "EffectHandle RegisterTick: 重复注册Tick",
+              ["EffectHandle", this.constructor.name],
+              ["Path", this.Path],
+            ),
+          this.UnregisterTick());
+        let t = void 0;
+        (t =
+          (t = this.tge.NeedAlwaysTick()
+            ? GameBudgetAllocatorConfigCreator_1
+                .GameBudgetAllocatorConfigCreator.TsAlwaysTickConfig
+            : this.EffectEnableRange ===
+                GameBudgetAllocatorConfigCreator_1.EFFECT_ENABLE_RANGE
+              ? this.tge.GetEffectType() === 3
+                ? GameBudgetAllocatorConfigCreator_1
+                    .GameBudgetAllocatorConfigCreator.TsEffectGroupConfig
+                : this.tge.GetEffectType() === 0
+                  ? GameBudgetAllocatorConfigCreator_1
+                      .GameBudgetAllocatorConfigCreator.TsFightEffectGroupConfig
+                  : GameBudgetAllocatorConfigCreator_1
+                      .GameBudgetAllocatorConfigCreator.TsAlwaysTickConfig
+              : GameBudgetAllocatorConfigCreator_1.GameBudgetAllocatorConfigCreator.GetEffectDynamicGroup(
+                  this.EffectEnableRange,
+                )) ||
+          GameBudgetAllocatorConfigCreator_1.GameBudgetAllocatorConfigCreator
+            .TsEffectGroupConfig),
+          (this.lge = t.GroupName),
+          (this.yW =
+            GameBudgetInterfaceController_1.GameBudgetInterfaceController.RegisterTick(
+              t.GroupName,
+              t.SignificanceGroup,
+              this,
+              this.ege,
+            )),
+          this.GetEffectSpec()?.IsUseBoundsCalculateDistance() &&
+            this.EffectEnableRange >
+              GameBudgetAllocatorConfigCreator_1.EFFECT_USE_BOUNDS_RANGE &&
+            GameBudgetInterfaceController_1.GameBudgetInterfaceController.SetUseBoundsCalculateDistance(
+              t.GroupName,
+              this.yW,
+              !0,
+            );
+      }
+  }
+  UnregisterTick() {
+    this.hge
+      ? (TickSystem_1.TickSystem.Remove(this.hge.Id), (this.hge = void 0))
+      : this.yW &&
+        (GameBudgetInterfaceController_1.GameBudgetInterfaceController.UnregisterTick(
+          this,
+        ),
+        (this.yW = void 0));
+  }
+  ScheduledTick(t, i, e) {
+    this.Tick(t);
+  }
+  OnEnabledChange(t, i) {
+    this.IsRoot() &&
+      t &&
+      this.IsPendingInit &&
+      EffectSystem_1.EffectSystem.InitHandleWhenEnable(this),
+      EffectEnvironment_1.EffectEnvironment.UseLog &&
+        Log_1.Log.CheckInfo() &&
+        Log_1.Log.Info(
+          "RenderEffect",
+          37,
+          "特效框架:OnEnabledChange",
+          ["句柄Id", this.Id],
+          ["IsRoot", this.IsRoot()],
+          ["Path", this.Path],
+          ["Enable", t],
+        ),
+      this.tge?.EnableChanged(t);
+  }
+  SeekDelta(t, i, e = !1) {
+    this.tge?.IsValid()
+      ? this.tge.SeekDelta(t, e, i)
+      : Log_1.Log.CheckInfo() &&
+        Log_1.Log.Info("RenderEffect", 37, "[EffectHandle]SeekDelta Failed", [
+          "handleId",
+          this.Id,
+        ]);
+  }
+  SeekTo(t, i, e = !1) {
+    this.tge?.IsValid()
+      ? this.tge.SeekTo(t, e, i)
+      : Log_1.Log.CheckInfo() &&
+        Log_1.Log.Info("RenderEffect", 37, "[EffectHandle]SeekTo Failed", [
+          "handleId",
+          this.Id,
+        ]);
+  }
+  ChaseFrame(t, i, e = !1) {
+    this.tge?.IsValid()
+      ? this.tge.ChaseFrame(t, e, i)
+      : Log_1.Log.CheckInfo() &&
+        Log_1.Log.Info("RenderEffect", 37, "[EffectHandle]ChaseFrame Failed", [
+          "handleId",
+          this.Id,
+        ]);
+  }
+  SeekToTimeWithProcess(t, i, e = !1) {
+    (this._ge = t), (this.uge = i), (this.cge = e), (this.mge = !0);
+  }
+  LocationProxyFunction() {
+    if (this.IsPendingInit) {
+      const t = this.InitCache?.Location;
+      if (t) return t;
+      Log_1.Log.CheckWarn() &&
+        Log_1.Log.Warn(
+          "RenderEffect",
+          37,
+          "LocationProxy is undefined",
+          ["handleId", this.Id],
+          ["path", this.InitCache?.Path],
+        );
+    }
+    return Vector_1.Vector.ZeroVector;
+  }
+  ApplyEffectParameters() {
+    this.NiagaraParameter &&
+      (this.tge.SetEffectParameterNiagara(this.NiagaraParameter),
+      (this.NiagaraParameter = void 0));
+  }
+  Tick(i) {
+    if (!(16 & this.ige) && this.IsDone())
+      if (this.InDebugMode()) this.DebugTick(i);
+      else if (this.ege?.IsValid()) {
+        let t = i;
+        if (this.tge?.IsValid()) {
+          if (
+            this.IsRoot() &&
+            !this.IgnoreVisibilityOptimize &&
+            this.tge.NeedVisibilityTest() &&
+            EffectSystem_1.EffectSystem.OpenVisibilityOptimize
+          ) {
+            if ((t = this.Lge(i)) < 0)
+              return void this.tge.TickNeedAlwaysTick(i);
+            t > i && this.tge.SeekTimeWithoutAlwaysTick(t, !0);
+          }
+          if (this.dge) return void this.Dge(i);
+          this.tge.Tick(i);
+        }
+        t !== i && (t += i);
+      }
+  }
+  RegisterActorDestroy() {
+    this.IsRoot() && this.ege.OnEndPlay.Add(this.fge);
+  }
+  FreezeEffect(t) {
+    this.dge = t;
+  }
+  Dge(t) {
+    let i = t;
+    let e, s;
+    this.mge
+      ? (e = this.GetEffectSpec()) &&
+        ((s = this._ge - e.PassTime),
+        this.uge > 0 && (i = this.uge),
+        Math.abs(s) < i
+          ? (e.SeekTo(this._ge, !0, !1, t), (this.mge = !1))
+          : ((i *= Math.sign(s)), e.SeekDelta(i, !0, !1, t)))
+      : this.cge && this.GetEffectSpec()?.SeekTo(this._ge, !0, !1, t);
+  }
+  PlayEffect(t) {
+    t
+      ? t.length < EffectSystem_1.EFFECT_REASON_LENGTH_LIMIT
+        ? Log_1.Log.CheckError() &&
+          Log_1.Log.Error(
+            "Entity",
+            3,
+            "PlayEffect的Reason字符串长度必须大于等于限制字符数量",
+            ["Reason", t],
+            ["限制的字符数量", EffectSystem_1.EFFECT_REASON_LENGTH_LIMIT],
+          )
+        : ((this.PlayReason = t),
+          this.IsPendingInit
+            ? this.yge()
+            : this.IsDone()
+              ? (EffectEnvironment_1.EffectEnvironment.UseLog &&
+                  Log_1.Log.CheckInfo() &&
+                  Log_1.Log.Info(
+                    "RenderEffect",
+                    3,
+                    "特效框架:播放特效",
+                    ["句柄Id", this.Id],
+                    ["IsRoot", this.IsRoot()],
+                    ["Path", this.Path],
+                    ["Reason", t],
+                  ),
+                this.IsLoop &&
+                  this.IsRoot() &&
+                  ((this.nx && (this.nx.EntityId || this.nx.SourceObject)) ||
+                    (Log_1.Log.CheckWarn() &&
+                      Log_1.Log.Warn(
+                        "Render",
+                        37,
+                        "特效框架:对应循环特效没有指定Owner,设置保底生命周期，保底时间为10分钟",
+                        ["句柄Id", this.Id],
+                        ["Path", this.Path],
+                        ["CreateReason", this.CreateReason],
+                      ),
+                    this.GetEffectSpec()?.SetLifeCycle(
+                      MAX_LOOP_EFFECT_WITHOUT_OWNER_TIME_OF_EXISTENCE,
+                    ))),
+                this.Play(t))
+              : (this.IsPendingPlay = !0))
+      : Log_1.Log.CheckError() &&
+        Log_1.Log.Error("Entity", 3, "PlayEffect的Reason不能使用undefined", [
+          "Reason",
+          t,
+        ]);
+  }
+  StopEffect(t, i = !1, e = !1) {
+    t
+      ? t.length < EffectSystem_1.EFFECT_REASON_LENGTH_LIMIT
+        ? Log_1.Log.CheckError() &&
+          Log_1.Log.Error(
+            "Entity",
+            3,
+            "StopEffect的Reason字符串长度必须大于等于限制字符数量",
+            ["Reason", t],
+            ["限制的字符数量", EffectSystem_1.EFFECT_REASON_LENGTH_LIMIT],
+            ["Path", this.Path],
+          )
+        : this.IsEffectValid()
+          ? this.IsRoot()
+            ? (!this.IsPendingInit && !this.GetRoot().IsDone()) || i
+              ? EffectSystem_1.EffectSystem.StopEffect(this, t, !0, e)
+              : (this.tge.SetPlaying(!1), this.tge.SetStopping(!0))
+            : Log_1.Log.CheckError() &&
+              Log_1.Log.Error(
+                "Entity",
+                3,
+                "子特效不能调用StopEffect",
+                ["Reason", t],
+                ["Path", this.Path],
+              )
+          : Log_1.Log.CheckError() &&
+            Log_1.Log.Error(
+              "Entity",
+              3,
+              "EffectHandle已失效，不能调用StopEffect()",
+              ["Reason", t],
+              ["Path", this.Path],
+            )
+      : Log_1.Log.CheckError() &&
+        Log_1.Log.Error(
+          "Entity",
+          3,
+          "StopEffect的Reason不能使用undefined",
+          ["Reason", t],
+          ["Path", this.Path],
+        );
+  }
+  DestroyEffect(t, i) {
+    t
+      ? t.length < EffectSystem_1.EFFECT_REASON_LENGTH_LIMIT
+        ? Log_1.Log.CheckError() &&
+          Log_1.Log.Error(
+            "Entity",
+            3,
+            "DestroyEffect的Reason字符串长度必须大于等于限制字符数量",
+            ["Reason", t],
+            ["限制的字符数量", EffectSystem_1.EFFECT_REASON_LENGTH_LIMIT],
+            ["Path", this.Path],
+          )
+        : this.IsEffectValid()
+          ? this.IsRoot()
+            ? EffectSystem_1.EffectSystem.StopEffect(this, t, !0, i)
+            : Log_1.Log.CheckError() &&
+              Log_1.Log.Error(
+                "Entity",
+                3,
+                "子特效不能调用DestroyEffect",
+                ["Reason", t],
+                ["Path", this.Path],
+              )
+          : Log_1.Log.CheckError() &&
+            Log_1.Log.Error(
+              "Entity",
+              3,
+              "EffectHandle已失效，不能调用DestroyEffect()",
+              ["Reason", t],
+              ["Path", this.Path],
+            )
+      : Log_1.Log.CheckError() &&
+        Log_1.Log.Error(
+          "Entity",
+          3,
+          "DestroyEffect的Reason不能使用undefined",
+          ["Reason", t],
+          ["Path", this.Path],
+        );
+  }
+  get HandleVisible() {
+    return this.obn;
+  }
+  OnVisibilityChanged(t, i = !0) {
+    this.tge?.IsValid()
+      ? (i && (this.obn = t), this.tge.VisibilityChanged(t))
+      : Log_1.Log.CheckWarn() &&
+        Log_1.Log.Warn(
+          "RenderEffect",
+          37,
+          "特效框架:OnVisibilityChanged Failed",
+          ["handleId", this.Id],
+        );
+  }
+  OnGlobalTimeScaleChange() {
+    this.GetEffectSpec()?.OnGlobalTimeScaleChange();
+  }
+  OnWasRecentlyRenderedOnScreenChange(t) {
+    EffectSystem_1.EffectSystem.OpenVisibilityOptimize &&
+      this.tge?.NeedVisibilityTest() &&
+      (t || (this.Cge = 0), this.OnVisibilityChanged(t));
+  }
+  Lge(t) {
+    let i, e;
+    return this.tge?.IsReallyPlaying()
+      ? ((i =
+          t *
+          (this.GetIgnoreTimeScale()
+            ? 1
+            : this.GetTimeScale() * this.GetGlobalTimeScale())),
+        this.tge.IsVisible()
+          ? !this.tge.IsLoop && this.Cge > t
+            ? ((e = this.Cge), (this.Cge = 0), e)
+            : t
+          : ((this.Cge += i), -1))
+      : t;
+  }
+  get DebugUpdate() {
+    return this.gge;
+  }
+  set DebugUpdate(t) {
+    Info_1.Info.IsBuildDevelopmentOrDebug && (this.gge = t);
+  }
+  InDebugMode() {
+    return this.DebugUpdate;
+  }
+  DebugTick(t) {
+    this.NiagaraDebugTick(t),
+      !this.tge?.IsValid() ||
+        this.tge instanceof EffectModelNiagaraSpec_1.EffectModelNiagaraSpec ||
+        this.tge.Tick(t);
+  }
+  NiagaraDebugTick(t) {
+    this.tge?.IsValid() &&
+      this.tge instanceof EffectModelNiagaraSpec_1.EffectModelNiagaraSpec &&
+      (this.tge.SetNiagaraSolo(!0), this.tge.DebugTick(t));
+  }
+  OnPlayFinished() {
+    Info_1.Info.IsGameRunning()
+      ? EffectSystem_1.EffectSystem.AddRemoveHandle(
+          this,
+          "[EffectLifeTime.PlayFinished] 播放完成",
+        )
+      : EffectSystem_1.EffectSystem.StopEffect(
+          this,
+          "[EffectLifeTime.PlayFinished] 播放完成",
+          !0,
+        );
+  }
+  CheckOwner() {
+    if (this.OnCustomCheckOwner) return this.OnCustomCheckOwner(this.Id);
+    if (this.nx) {
+      if (this.nx.EntityId)
+        if (!EntitySystem_1.EntitySystem.Get(this.nx.EntityId)?.Valid)
+          return !1;
+      if (this.nx.SourceObject && !this.nx.SourceObject.IsValid()) return !1;
+    }
+    return !0;
+  }
+  AttachToEffectSkeletalMesh(t, i, e) {
+    this.IsPendingInit
+      ? this.InitCache?.EffectActorHandle.SetBeAttached(t, i, e)
+      : this.ege
+        ? this.ExecuteAttachToEffectSkeletalMesh(t, i, e)
+        : Log_1.Log.CheckWarn() &&
+          Log_1.Log.Warn(
+            "RenderEffect",
+            37,
+            "特效框架: 调用AttachToEffectActor时，EffectActor为空",
+          );
+  }
+  ExecuteAttachToEffectSkeletalMesh(t, i, e) {
+    let s;
+    t.IsValid() &&
+      (this.pge || (this.pge = new Array()),
+      (s = this.ege?.GetComponentByClass(
+        UE.SkeletalMeshComponent.StaticClass(),
+      ))) &&
+      (this.pge.push(t), t.K2_AttachToComponent(s, i, e, e, e, !1));
+  }
+  GetGlobalStoppingTime() {
+    return EffectSystem_1.EffectSystem.GlobalStoppingTime;
+  }
+  GetGlobalStoppingPlayTime() {
+    return EffectSystem_1.EffectSystem.GlobalStoppingPlayTime;
+  }
+}
+(EffectHandle.Ige = void 0),
+  (EffectHandle.Tge = void 0),
+  (EffectHandle.Mge = void 0),
+  (EffectHandle.Ege = void 0),
+  __decorate(
+    [(0, PerformanceDecorators_1.TickEffectPerformanceWithEntity)()],
+    EffectHandle.prototype,
+    "Tick",
+    null,
+  ),
+  __decorate(
+    [(0, PerformanceDecorators_1.TickEffectPerformanceEx)(!0)],
+    EffectHandle.prototype,
+    "DebugTick",
+    null,
+  ),
+  __decorate(
+    [(0, PerformanceDecorators_1.TickPerformanceEx)("NiagaraDebugTick", !0)],
+    EffectHandle.prototype,
+    "NiagaraDebugTick",
+    null,
+  ),
+  (exports.EffectHandle = EffectHandle);
+// # sourceMappingURL=EffectHandle.js.map

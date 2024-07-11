@@ -1,3 +1,147 @@
-
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.OnlineChallengeApplyView=void 0;const UE=require("ue"),Log_1=require("../../../../Core/Common/Log"),CommonParamById_1=require("../../../../Core/Define/ConfigCommon/CommonParamById"),MultiTextLang_1=require("../../../../Core/Define/ConfigQuery/MultiTextLang"),TimeUtil_1=require("../../../Common/TimeUtil"),ConfigManager_1=require("../../../Manager/ConfigManager"),ModelManager_1=require("../../../Manager/ModelManager"),UiTickViewBase_1=require("../../../Ui/Base/UiTickViewBase"),InstanceDungeonEntranceController_1=require("../../InstanceDungeon/InstanceDungeonEntranceController"),LguiUtil_1=require("../../Util/LguiUtil"),OnlineController_1=require("../OnlineController"),ControllerHolder_1=require("../../../Manager/ControllerHolder");class OnlineChallengeApplyView extends UiTickViewBase_1.UiTickViewBase{constructor(){super(...arguments),this.EGi=-1,this.yGi=-1,this.Q2t=void 0,this.pGi=void 0,this.MGi=()=>{if(ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance()){if(0===ModelManager_1.ModelManager.OnlineModel.GetContinuingChallengeConfirmState(ModelManager_1.ModelManager.PlayerInfoModel.GetId())&&ModelManager_1.ModelManager.OnlineModel.GetIsMyTeam())return void OnlineController_1.OnlineController.InviteRechallengeRequest();OnlineController_1.OnlineController.ReceiveRechallengeRequest()}else InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.TeamMatchAcceptInviteRequest(!0);this.CloseMe()},this.J9e=()=>{ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance()||InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.TeamMatchAcceptInviteRequest(!1),this.CloseMe()}}OnRegisterComponent(){this.ComponentRegisterInfos=[[0,UE.UITexture],[1,UE.UIText],[2,UE.UIButtonComponent],[3,UE.UIItem],[4,UE.UIItem],[5,UE.UIText],[6,UE.UISprite],[7,UE.UIText],[8,UE.UIButtonComponent]],this.BtnBindInfo=[[2,this.MGi],[8,this.J9e]]}OnStart(){var e;this.GetButton(8).GetRootComponent().SetUIActive(!0),this.Q2t=this.GetText(5),this.pGi=this.GetSprite(6),ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance()?(this.EGi=ModelManager_1.ModelManager.OnlineModel.ApplyCd,this.yGi=ModelManager_1.ModelManager.OnlineModel.ApplyCd,this.IGi()):(e=CommonParamById_1.configCommonParamById.GetIntConfig("match_confirm_time_out_seconds"),this.EGi=e,this.yGi=e,this.TGi())}OnTick(e){this.EGi-=e*TimeUtil_1.TimeUtil.Millisecond,this.EGi<=0?this.CloseMe():(this.Q2t.SetText(TimeUtil_1.TimeUtil.GetCoolDown(this.EGi)),this.pGi.SetFillAmount(this.EGi/this.yGi))}IGi(){var e=this.GetItem(3),i=this.GetItem(4),t=this.GetText(7),e=(e.SetUIActive(!0),i.SetUIActive(!1),ModelManager_1.ModelManager.SceneTeamModel.IsAllDid()?ModelManager_1.ModelManager.CreatureModel.IsMyWorld()?LguiUtil_1.LguiUtil.SetLocalText(t,"SuggestChallengeAgain"):LguiUtil_1.LguiUtil.SetLocalText(t,"InviteChallengeAgain"):ModelManager_1.ModelManager.CreatureModel.IsMyWorld()?LguiUtil_1.LguiUtil.SetLocalText(t,"SuggestContinueChallenge"):LguiUtil_1.LguiUtil.SetLocalText(t,"InviteContinueChallenge"),ModelManager_1.ModelManager.OnlineModel.ChallengeApplyPlayerId),i=ModelManager_1.ModelManager.OnlineModel.GetCurrentTeamListById(e);i?(this.GetText(1).SetText(i.Name),this.Q2t.SetText(TimeUtil_1.TimeUtil.GetCoolDown(this.EGi)),this.pGi.SetFillAmount(this.EGi/this.yGi),(t=ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(i.HeadId)?.Card)&&this.SetTextureByPath(t,this.GetTexture(0))):Log_1.Log.CheckError()&&Log_1.Log.Error("MultiPlayerTeam",5,"未找到发起邀请的玩家",["playerId：",e])}TGi(){var e=this.GetItem(3),i=this.GetItem(4),e=(e.SetUIActive(!0),i.SetUIActive(!1),this.GetText(1)),i=(LguiUtil_1.LguiUtil.SetLocalText(e,"TeamLeaderInviteToInstance"),this.GetText(7)),e=ModelManager_1.ModelManager.InstanceDungeonModel.GetInstanceId(),e=MultiTextLang_1.configMultiTextLang.GetLocalTextNew(ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(e).MapName)??"",i=(i.SetText(e),ModelManager_1.ModelManager.OnlineModel.OwnerId),e=ModelManager_1.ModelManager.OnlineModel.GetCurrentTeamListById(i);e?(this.Q2t.SetText(TimeUtil_1.TimeUtil.GetCoolDown(this.EGi)),this.pGi.SetFillAmount(this.EGi/this.yGi),(e=ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(e.HeadId)?.Card)&&this.SetTextureByPath(e,this.GetTexture(0))):Log_1.Log.CheckError()&&Log_1.Log.Error("MultiPlayerTeam",5,"未找到发起邀请的玩家",["playerId：",i])}}exports.OnlineChallengeApplyView=OnlineChallengeApplyView;
-//# sourceMappingURL=OnlineChallengeApplyView.js.map
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: !0 }),
+  (exports.OnlineChallengeApplyView = void 0);
+const UE = require("ue");
+const Log_1 = require("../../../../Core/Common/Log");
+const CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById");
+const MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang");
+const TimeUtil_1 = require("../../../Common/TimeUtil");
+const ConfigManager_1 = require("../../../Manager/ConfigManager");
+const ModelManager_1 = require("../../../Manager/ModelManager");
+const UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase");
+const InstanceDungeonEntranceController_1 = require("../../InstanceDungeon/InstanceDungeonEntranceController");
+const LguiUtil_1 = require("../../Util/LguiUtil");
+const OnlineController_1 = require("../OnlineController");
+const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
+class OnlineChallengeApplyView extends UiTickViewBase_1.UiTickViewBase {
+  constructor() {
+    super(...arguments),
+      (this.EGi = -1),
+      (this.yGi = -1),
+      (this.Q2t = void 0),
+      (this.pGi = void 0),
+      (this.MGi = () => {
+        if (
+          ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance()
+        ) {
+          if (
+            ModelManager_1.ModelManager.OnlineModel.GetContinuingChallengeConfirmState(
+              ModelManager_1.ModelManager.PlayerInfoModel.GetId(),
+            ) === 0 &&
+            ModelManager_1.ModelManager.OnlineModel.GetIsMyTeam()
+          )
+            return void OnlineController_1.OnlineController.InviteRechallengeRequest();
+          OnlineController_1.OnlineController.ReceiveRechallengeRequest();
+        } else
+          InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.TeamMatchAcceptInviteRequest(
+            !0,
+          );
+        this.CloseMe();
+      }),
+      (this.J9e = () => {
+        ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance() ||
+          InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.TeamMatchAcceptInviteRequest(
+            !1,
+          ),
+          this.CloseMe();
+      });
+  }
+  OnRegisterComponent() {
+    (this.ComponentRegisterInfos = [
+      [0, UE.UITexture],
+      [1, UE.UIText],
+      [2, UE.UIButtonComponent],
+      [3, UE.UIItem],
+      [4, UE.UIItem],
+      [5, UE.UIText],
+      [6, UE.UISprite],
+      [7, UE.UIText],
+      [8, UE.UIButtonComponent],
+    ]),
+      (this.BtnBindInfo = [
+        [2, this.MGi],
+        [8, this.J9e],
+      ]);
+  }
+  OnStart() {
+    let e;
+    this.GetButton(8).GetRootComponent().SetUIActive(!0),
+      (this.Q2t = this.GetText(5)),
+      (this.pGi = this.GetSprite(6)),
+      ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance()
+        ? ((this.EGi = ModelManager_1.ModelManager.OnlineModel.ApplyCd),
+          (this.yGi = ModelManager_1.ModelManager.OnlineModel.ApplyCd),
+          this.IGi())
+        : ((e = CommonParamById_1.configCommonParamById.GetIntConfig(
+            "match_confirm_time_out_seconds",
+          )),
+          (this.EGi = e),
+          (this.yGi = e),
+          this.TGi());
+  }
+  OnTick(e) {
+    (this.EGi -= e * TimeUtil_1.TimeUtil.Millisecond),
+      this.EGi <= 0
+        ? this.CloseMe()
+        : (this.Q2t.SetText(TimeUtil_1.TimeUtil.GetCoolDown(this.EGi)),
+          this.pGi.SetFillAmount(this.EGi / this.yGi));
+  }
+  IGi() {
+    var e = this.GetItem(3);
+    var i = this.GetItem(4);
+    let t = this.GetText(7);
+    var e =
+      (e.SetUIActive(!0),
+      i.SetUIActive(!1),
+      ModelManager_1.ModelManager.SceneTeamModel.IsAllDid()
+        ? ModelManager_1.ModelManager.CreatureModel.IsMyWorld()
+          ? LguiUtil_1.LguiUtil.SetLocalText(t, "SuggestChallengeAgain")
+          : LguiUtil_1.LguiUtil.SetLocalText(t, "InviteChallengeAgain")
+        : ModelManager_1.ModelManager.CreatureModel.IsMyWorld()
+          ? LguiUtil_1.LguiUtil.SetLocalText(t, "SuggestContinueChallenge")
+          : LguiUtil_1.LguiUtil.SetLocalText(t, "InviteContinueChallenge"),
+      ModelManager_1.ModelManager.OnlineModel.ChallengeApplyPlayerId);
+    var i = ModelManager_1.ModelManager.OnlineModel.GetCurrentTeamListById(e);
+    i
+      ? (this.GetText(1).SetText(i.Name),
+        this.Q2t.SetText(TimeUtil_1.TimeUtil.GetCoolDown(this.EGi)),
+        this.pGi.SetFillAmount(this.EGi / this.yGi),
+        (t = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(
+          i.HeadId,
+        )?.Card) && this.SetTextureByPath(t, this.GetTexture(0)))
+      : Log_1.Log.CheckError() &&
+        Log_1.Log.Error("MultiPlayerTeam", 5, "未找到发起邀请的玩家", [
+          "playerId：",
+          e,
+        ]);
+  }
+  TGi() {
+    var e = this.GetItem(3);
+    var i = this.GetItem(4);
+    var e = (e.SetUIActive(!0), i.SetUIActive(!1), this.GetText(1));
+    var i =
+      (LguiUtil_1.LguiUtil.SetLocalText(e, "TeamLeaderInviteToInstance"),
+      this.GetText(7));
+    var e = ModelManager_1.ModelManager.InstanceDungeonModel.GetInstanceId();
+    var e =
+      MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
+        ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(e)
+          .MapName,
+      ) ?? "";
+    var i = (i.SetText(e), ModelManager_1.ModelManager.OnlineModel.OwnerId);
+    var e = ModelManager_1.ModelManager.OnlineModel.GetCurrentTeamListById(i);
+    e
+      ? (this.Q2t.SetText(TimeUtil_1.TimeUtil.GetCoolDown(this.EGi)),
+        this.pGi.SetFillAmount(this.EGi / this.yGi),
+        (e = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(
+          e.HeadId,
+        )?.Card) && this.SetTextureByPath(e, this.GetTexture(0)))
+      : Log_1.Log.CheckError() &&
+        Log_1.Log.Error("MultiPlayerTeam", 5, "未找到发起邀请的玩家", [
+          "playerId：",
+          i,
+        ]);
+  }
+}
+exports.OnlineChallengeApplyView = OnlineChallengeApplyView;
+// # sourceMappingURL=OnlineChallengeApplyView.js.map

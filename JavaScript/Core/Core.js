@@ -1,25 +1,25 @@
 "use strict";
-var _a;
+let _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.Core = void 0);
-const cpp_1 = require("cpp"),
-  ActorSystem_1 = require("./Actor/ActorSystem"),
-  Application_1 = require("./Application/Application"),
-  Info_1 = require("./Common/Info"),
-  Log_1 = require("./Common/Log"),
-  Logo_1 = require("./Common/Logo"),
-  Time_1 = require("./Common/Time"),
-  ProxyLru_1 = require("./Container/ProxyLru"),
-  ConfigStatement_1 = require("./Define/ConfigQuery/ConfigStatement"),
-  EffectEnvironment_1 = require("./Effect/EffectEnvironment"),
-  EntityComponentSystem_1 = require("./Entity/EntityComponentSystem"),
-  EntitySystem_1 = require("./Entity/EntitySystem"),
-  GameBudgetInterfaceController_1 = require("./GameBudgetAllocator/GameBudgetInterfaceController"),
-  Net_1 = require("./Net/Net"),
-  ObjectSystem_1 = require("./Object/ObjectSystem"),
-  CycleCounter_1 = require("./Performance/CycleCounter"),
-  TickSystem_1 = require("./Tick/TickSystem"),
-  TimerSystem_1 = require("./Timer/TimerSystem");
+const cpp_1 = require("cpp");
+const ActorSystem_1 = require("./Actor/ActorSystem");
+const Application_1 = require("./Application/Application");
+const Info_1 = require("./Common/Info");
+const Log_1 = require("./Common/Log");
+const Logo_1 = require("./Common/Logo");
+const Time_1 = require("./Common/Time");
+const ProxyLru_1 = require("./Container/ProxyLru");
+const ConfigStatement_1 = require("./Define/ConfigQuery/ConfigStatement");
+const EffectEnvironment_1 = require("./Effect/EffectEnvironment");
+const EntityComponentSystem_1 = require("./Entity/EntityComponentSystem");
+const EntitySystem_1 = require("./Entity/EntitySystem");
+const GameBudgetInterfaceController_1 = require("./GameBudgetAllocator/GameBudgetInterfaceController");
+const Net_1 = require("./Net/Net");
+const ObjectSystem_1 = require("./Object/ObjectSystem");
+const CycleCounter_1 = require("./Performance/CycleCounter");
+const TickSystem_1 = require("./Tick/TickSystem");
+const TimerSystem_1 = require("./Timer/TimerSystem");
 class Core {
   constructor() {}
   static Initialize(e) {
@@ -29,7 +29,7 @@ class Core {
       Log_1.Log.SetLevel(3),
       CycleCounter_1.CycleCounter.SetEnable(!Info_1.Info.IsBuildShipping),
       GameBudgetInterfaceController_1.GameBudgetInterfaceController.InitializeEnvironment(
-        e.GetWorld()
+        e.GetWorld(),
       ),
       Time_1.Time.Initialize(),
       Net_1.Net.Initialize(),
@@ -45,16 +45,18 @@ class Core {
       TickSystem_1.TickSystem.Add(this.Tick, "Core", 0, !0),
       TickSystem_1.TickSystem.Add(this.AfterTick, "Core", 4, !0);
   }
+
   static RegisterPreTick(e) {
     this.br.has(e)
       ? Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn(
           "Core",
           6,
-          "[Core.RegisterPreTickFunctions] 已经注册过PreTickfunc"
+          "[Core.RegisterPreTickFunctions] 已经注册过PreTickfunc",
         )
       : this.br.add(e);
   }
+
   static UnRegisterPreTick(e) {
     this.br.has(e)
       ? this.br.delete(e)
@@ -62,7 +64,7 @@ class Core {
         Log_1.Log.Warn(
           "Core",
           6,
-          "[Core.UnRegisterPreTick] 未注册的PreTickfunc"
+          "[Core.UnRegisterPreTick] 未注册的PreTickfunc",
         );
   }
 }
@@ -72,9 +74,10 @@ class Core {
     if (
       (CycleCounter_1.CycleCounter.RefreshState(),
       !TickSystem_1.TickSystem.IsPaused)
-    )
+    ) {
       for (const r of _a.br) r(e);
-    var t = e / 1e3;
+    }
+    const t = e / 1e3;
     Net_1.Net.Tick(t),
       Time_1.Time.Tick(e),
       TimerSystem_1.TimerSystem.Tick(e),
@@ -82,7 +85,7 @@ class Core {
         (EffectEnvironment_1.EffectEnvironment.Tick(e, Info_1.Info.World),
         Info_1.Info.EnableForceTick && EntitySystem_1.EntitySystem.ForceTick(e),
         GameBudgetInterfaceController_1.GameBudgetInterfaceController.UpdateBudgetTime(
-          e
+          e,
         )),
       cpp_1.FKuroGameBudgetAllocatorInterface.TickOutside(t),
       TickSystem_1.TickSystem.IsPaused || EntitySystem_1.EntitySystem.Tick(e);

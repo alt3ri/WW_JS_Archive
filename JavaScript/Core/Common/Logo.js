@@ -1,10 +1,12 @@
-
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.LOGO=void 0,exports.LOGO=`
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: !0 }),
+  (exports.LOGO = void 0),
+  (exports.LOGO = `
 ██╗  ██╗██╗   ██╗██████╗  ██████╗  ██████╗  █████╗ ███╗   ███╗███████╗
 ██║ ██╔╝██║   ██║██╔══██╗██╔═══██╗██╔════╝ ██╔══██╗████╗ ████║██╔════╝
 █████╔╝ ██║   ██║██████╔╝██║   ██║██║  ███╗███████║██╔████╔██║█████╗  
 ██╔═██╗ ██║   ██║██╔══██╗██║   ██║██║   ██║██╔══██║██║╚██╔╝██║██╔══╝  
 ██║  ██╗╚██████╔╝██║  ██║╚██████╔╝╚██████╔╝██║  ██║██║ ╚═╝ ██║███████╗
 ╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═╝ ╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝╚══════╝
-`;
-//# sourceMappingURL=Logo.js.map
+`);
+// # sourceMappingURL=Logo.js.map

@@ -1,3 +1,80 @@
-
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.SwimConfig=void 0;const Log_1=require("../../../../../../Core/Common/Log"),SwimBuffById_1=require("../../../../../../Core/Define/ConfigQuery/SwimBuffById"),SwimById_1=require("../../../../../../Core/Define/ConfigQuery/SwimById"),ConfigBase_1=require("../../../../../../Core/Framework/ConfigBase"),NORMAL_SWIM_CONFIG_ID=0,NO_INPUT_CONFIG_ID=1,FAST_SWIM_CONFIG_ID=3;class SwimConfig extends ConfigBase_1.ConfigBase{constructor(){super(...arguments),this.xzo=void 0,this.wzo=void 0,this.Bzo=void 0,this.bzo=void 0}OnInit(){return this.xzo=new Map,this.wzo=BigInt(0),this.Bzo=BigInt(0),this.bzo=BigInt(0),this.InitSwimBuffConfig(),!0}OnClear(){return this.xzo=void 0,this.wzo=void 0,this.Bzo=void 0,!(this.bzo=void 0)}GetSwimConfigByRoleBodyId(i){var e=this.xzo.get(i);return e||((e=SwimById_1.configSwimById.GetConfig(i))||Log_1.Log.CheckError()&&Log_1.Log.Error("Movement",58,"以下身高没有配置游泳",["RoleBody",i]),this.xzo.set(i,e),e)}GetSwimBuffId(i,e){return i?e?this.Bzo:this.wzo:this.bzo}InitSwimBuffConfig(){var i=SwimBuffById_1.configSwimBuffById.GetConfig(NORMAL_SWIM_CONFIG_ID);i?(this.wzo=BigInt(i.BuffId),(i=SwimBuffById_1.configSwimBuffById.GetConfig(NO_INPUT_CONFIG_ID))?(this.bzo=BigInt(i.BuffId),(i=SwimBuffById_1.configSwimBuffById.GetConfig(FAST_SWIM_CONFIG_ID))?this.Bzo=BigInt(i.BuffId):Log_1.Log.CheckError()&&Log_1.Log.Error("Movement",58,"游泳Buff表没有配置Id为3的基础配置")):Log_1.Log.CheckError()&&Log_1.Log.Error("Movement",58,"游泳Buff表没有配置Id为1的基础配置")):Log_1.Log.CheckError()&&Log_1.Log.Error("Movement",58,"游泳Buff表没有配置Id为0的基础配置")}}exports.SwimConfig=SwimConfig;
-//# sourceMappingURL=SwimConfig.js.map
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: !0 }),
+  (exports.SwimConfig = void 0);
+const Log_1 = require("../../../../../../Core/Common/Log");
+const SwimBuffById_1 = require("../../../../../../Core/Define/ConfigQuery/SwimBuffById");
+const SwimById_1 = require("../../../../../../Core/Define/ConfigQuery/SwimById");
+const ConfigBase_1 = require("../../../../../../Core/Framework/ConfigBase");
+const NORMAL_SWIM_CONFIG_ID = 0;
+const NO_INPUT_CONFIG_ID = 1;
+const FAST_SWIM_CONFIG_ID = 3;
+class SwimConfig extends ConfigBase_1.ConfigBase {
+  constructor() {
+    super(...arguments),
+      (this.xzo = void 0),
+      (this.wzo = void 0),
+      (this.Bzo = void 0),
+      (this.bzo = void 0);
+  }
+  OnInit() {
+    return (
+      (this.xzo = new Map()),
+      (this.wzo = BigInt(0)),
+      (this.Bzo = BigInt(0)),
+      (this.bzo = BigInt(0)),
+      this.InitSwimBuffConfig(),
+      !0
+    );
+  }
+  OnClear() {
+    return (
+      (this.xzo = void 0),
+      (this.wzo = void 0),
+      (this.Bzo = void 0),
+      !(this.bzo = void 0)
+    );
+  }
+  GetSwimConfigByRoleBodyId(i) {
+    let e = this.xzo.get(i);
+    return (
+      e ||
+      ((e = SwimById_1.configSwimById.GetConfig(i)) ||
+        (Log_1.Log.CheckError() &&
+          Log_1.Log.Error("Movement", 58, "以下身高没有配置游泳", [
+            "RoleBody",
+            i,
+          ])),
+      this.xzo.set(i, e),
+      e)
+    );
+  }
+  GetSwimBuffId(i, e) {
+    return i ? (e ? this.Bzo : this.wzo) : this.bzo;
+  }
+  InitSwimBuffConfig() {
+    let i = SwimBuffById_1.configSwimBuffById.GetConfig(NORMAL_SWIM_CONFIG_ID);
+    i
+      ? ((this.wzo = BigInt(i.BuffId)),
+        (i = SwimBuffById_1.configSwimBuffById.GetConfig(NO_INPUT_CONFIG_ID))
+          ? ((this.bzo = BigInt(i.BuffId)),
+            (i =
+              SwimBuffById_1.configSwimBuffById.GetConfig(FAST_SWIM_CONFIG_ID))
+              ? (this.Bzo = BigInt(i.BuffId))
+              : Log_1.Log.CheckError() &&
+                Log_1.Log.Error(
+                  "Movement",
+                  58,
+                  "游泳Buff表没有配置Id为3的基础配置",
+                ))
+          : Log_1.Log.CheckError() &&
+            Log_1.Log.Error(
+              "Movement",
+              58,
+              "游泳Buff表没有配置Id为1的基础配置",
+            ))
+      : Log_1.Log.CheckError() &&
+        Log_1.Log.Error("Movement", 58, "游泳Buff表没有配置Id为0的基础配置");
+  }
+}
+exports.SwimConfig = SwimConfig;
+// # sourceMappingURL=SwimConfig.js.map

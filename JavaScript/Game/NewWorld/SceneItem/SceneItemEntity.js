@@ -1,3 +1,2 @@
-
 "use strict";
-//# sourceMappingURL=SceneItemEntity.js.map
+// # sourceMappingURL=SceneItemEntity.js.map

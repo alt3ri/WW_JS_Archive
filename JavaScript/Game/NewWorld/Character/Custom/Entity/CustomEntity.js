@@ -1,3 +1,2 @@
-
 "use strict";
-//# sourceMappingURL=CustomEntity.js.map
+// # sourceMappingURL=CustomEntity.js.map

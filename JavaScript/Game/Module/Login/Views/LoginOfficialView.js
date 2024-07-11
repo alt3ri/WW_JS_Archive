@@ -1,35 +1,35 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LoginOfficialView = void 0);
-const UE = require("ue"),
-  Log_1 = require("../../../../Core/Common/Log"),
-  MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang"),
-  TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
-  BaseConfigController_1 = require("../../../../Launcher/BaseConfig/BaseConfigController"),
-  HotPatchLogReport_1 = require("../../../../Launcher/HotPatchLogReport"),
-  PakKeyUpdate_1 = require("../../../../Launcher/Update/PakKeyUpdate"),
-  EventDefine_1 = require("../../../Common/Event/EventDefine"),
-  EventSystem_1 = require("../../../Common/Event/EventSystem"),
-  LocalStorage_1 = require("../../../Common/LocalStorage"),
-  LocalStorageDefine_1 = require("../../../Common/LocalStorageDefine"),
-  GlobalData_1 = require("../../../GlobalData"),
-  KuroSdkController_1 = require("../../../KuroSdk/KuroSdkController"),
-  ConfigManager_1 = require("../../../Manager/ConfigManager"),
-  ModelManager_1 = require("../../../Manager/ModelManager"),
-  ThirdPartySdkManager_1 = require("../../../Manager/ThirdPartySdkManager"),
-  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
-  UiSequenceDefine_1 = require("../../../Ui/Define/UiSequenceDefine"),
-  UiLayer_1 = require("../../../Ui/UiLayer"),
-  UiManager_1 = require("../../../Ui/UiManager"),
-  ConfirmBoxController_1 = require("../../ConfirmBox/ConfirmBoxController"),
-  ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine"),
-  GenericPromptController_1 = require("../../GenericPrompt/GenericPromptController"),
-  UiLoginSceneManager_1 = require("../../UiComponent/UiLoginSceneManager"),
-  LguiUtil_1 = require("../../Util/LguiUtil"),
-  LoginDefine_1 = require("../Data/LoginDefine"),
-  LoginController_1 = require("../LoginController"),
-  LoginServerController_1 = require("../LoginServerController"),
-  LoginAgeTipView_1 = require("./LoginAgeTipView");
+const UE = require("ue");
+const Log_1 = require("../../../../Core/Common/Log");
+const MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang");
+const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem");
+const BaseConfigController_1 = require("../../../../Launcher/BaseConfig/BaseConfigController");
+const HotPatchLogReport_1 = require("../../../../Launcher/HotPatchLogReport");
+const PakKeyUpdate_1 = require("../../../../Launcher/Update/PakKeyUpdate");
+const EventDefine_1 = require("../../../Common/Event/EventDefine");
+const EventSystem_1 = require("../../../Common/Event/EventSystem");
+const LocalStorage_1 = require("../../../Common/LocalStorage");
+const LocalStorageDefine_1 = require("../../../Common/LocalStorageDefine");
+const GlobalData_1 = require("../../../GlobalData");
+const KuroSdkController_1 = require("../../../KuroSdk/KuroSdkController");
+const ConfigManager_1 = require("../../../Manager/ConfigManager");
+const ModelManager_1 = require("../../../Manager/ModelManager");
+const ThirdPartySdkManager_1 = require("../../../Manager/ThirdPartySdkManager");
+const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
+const UiSequenceDefine_1 = require("../../../Ui/Define/UiSequenceDefine");
+const UiLayer_1 = require("../../../Ui/UiLayer");
+const UiManager_1 = require("../../../Ui/UiManager");
+const ConfirmBoxController_1 = require("../../ConfirmBox/ConfirmBoxController");
+const ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine");
+const GenericPromptController_1 = require("../../GenericPrompt/GenericPromptController");
+const UiLoginSceneManager_1 = require("../../UiComponent/UiLoginSceneManager");
+const LguiUtil_1 = require("../../Util/LguiUtil");
+const LoginDefine_1 = require("../Data/LoginDefine");
+const LoginController_1 = require("../LoginController");
+const LoginServerController_1 = require("../LoginServerController");
+const LoginAgeTipView_1 = require("./LoginAgeTipView");
 class LoginOfficialView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -41,23 +41,23 @@ class LoginOfficialView extends UiViewBase_1.UiViewBase {
             ? LoginController_1.LoginController.ReOpenSdkLoginView()
             : (HotPatchLogReport_1.HotPatchLogReport.ReportLogin(
                 HotPatchLogReport_1.LoginLogEventDefine.EnterGame,
-                "enter_game_start"
+                "enter_game_start",
               ),
               LoginController_1.LoginController.GetHttp(!1, !1))
           : (Log_1.Log.CheckInfo() &&
               Log_1.Log.Info("Login", 10, "还未同意协议"),
             GenericPromptController_1.GenericPromptController.ShowPromptByCode(
-              "AgreementTips"
+              "AgreementTips",
             ));
       }),
       (this.sLt = () => {
-        var e;
+        let e;
         ModelManager_1.ModelManager.LoginModel.IsLoginStatus(
-          LoginDefine_1.ELoginStatus.Init
+          LoginDefine_1.ELoginStatus.Init,
         )
           ? ((e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(44)).FunctionMap.set(
               2,
-              this.aLt
+              this.aLt,
             ),
             ConfirmBoxController_1.ConfirmBoxController.ShowConfirmBoxNew(e))
           : Log_1.Log.CheckInfo() &&
@@ -69,88 +69,91 @@ class LoginOfficialView extends UiViewBase_1.UiViewBase {
       (this.lLt = () => {
         let r = !1;
         if (KuroSdkController_1.KuroSdkController.CanUseSdk()) {
-          var i = KuroSdkController_1.KuroSdkController.GetAgreement();
-          for (let e = 0; e < i.length; e++)
+          const i = KuroSdkController_1.KuroSdkController.GetAgreement();
+          for (let e = 0; e < i.length; e++) {
             if (i[e].link.includes("agreement_public")) {
               var o =
-                  ConfigManager_1.ConfigManager.TextConfig.GetTextContentIdById(
-                    "UserTitle"
-                  ),
-                o = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(o);
+                ConfigManager_1.ConfigManager.TextConfig.GetTextContentIdById(
+                  "UserTitle",
+                );
+              var o = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(o);
               KuroSdkController_1.KuroSdkController.SdkOpenUrlWnd(
                 o,
                 i[e].link,
                 !0,
-                !1
+                !1,
               ),
                 (r = !0);
               break;
             }
+          }
         }
         r ||
           (Log_1.Log.CheckInfo() && Log_1.Log.Info("Login", 10, "打开用户协议"),
           UiManager_1.UiManager.OpenView(
             "LoginAgeTipView",
-            LoginAgeTipView_1.ELoginShowType.UserAgreement
+            LoginAgeTipView_1.ELoginShowType.UserAgreement,
           ),
           UiLayer_1.UiLayer.SetShowNormalMaskLayer(!0));
       }),
       (this.uLt = () => {
         let r = !1;
         if (KuroSdkController_1.KuroSdkController.CanUseSdk()) {
-          var i = KuroSdkController_1.KuroSdkController.GetAgreement();
-          for (let e = 0; e < i.length; e++)
+          const i = KuroSdkController_1.KuroSdkController.GetAgreement();
+          for (let e = 0; e < i.length; e++) {
             if (i[e].link.includes("personal_privacy")) {
               var o =
-                  ConfigManager_1.ConfigManager.TextConfig.GetTextContentIdById(
-                    "PrivacyTitle"
-                  ),
-                o = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(o);
+                ConfigManager_1.ConfigManager.TextConfig.GetTextContentIdById(
+                  "PrivacyTitle",
+                );
+              var o = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(o);
               KuroSdkController_1.KuroSdkController.SdkOpenUrlWnd(
                 o,
                 i[e].link,
                 !0,
-                !1
+                !1,
               ),
                 (r = !0);
               break;
             }
+          }
         }
         r ||
           (Log_1.Log.CheckInfo() && Log_1.Log.Info("Login", 10, "打开隐私政策"),
           UiManager_1.UiManager.OpenView(
             "LoginAgeTipView",
-            LoginAgeTipView_1.ELoginShowType.PrivacyAgreement
+            LoginAgeTipView_1.ELoginShowType.PrivacyAgreement,
           ),
           UiLayer_1.UiLayer.SetShowNormalMaskLayer(!0));
       }),
       (this._Lt = () => {
         let r = !1;
         if (KuroSdkController_1.KuroSdkController.CanUseSdk()) {
-          var i = KuroSdkController_1.KuroSdkController.GetAgreement();
-          for (let e = 0; e < i.length; e++)
+          const i = KuroSdkController_1.KuroSdkController.GetAgreement();
+          for (let e = 0; e < i.length; e++) {
             if (i[e].link.includes("child_privacy")) {
               var o =
-                  ConfigManager_1.ConfigManager.TextConfig.GetTextContentIdById(
-                    "ChildPrivacyTitle"
-                  ),
-                o = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(o);
+                ConfigManager_1.ConfigManager.TextConfig.GetTextContentIdById(
+                  "ChildPrivacyTitle",
+                );
+              var o = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(o);
               KuroSdkController_1.KuroSdkController.SdkOpenUrlWnd(
                 o,
                 i[e].link,
                 !0,
-                !1
+                !1,
               ),
                 (r = !0);
               break;
             }
+          }
         }
         r ||
           (Log_1.Log.CheckInfo() &&
             Log_1.Log.Info("Login", 10, "打开儿童隐私政策"),
           UiManager_1.UiManager.OpenView(
             "LoginAgeTipView",
-            LoginAgeTipView_1.ELoginShowType.ChildPrivacyAgreement
+            LoginAgeTipView_1.ELoginShowType.ChildPrivacyAgreement,
           ),
           UiLayer_1.UiLayer.SetShowNormalMaskLayer(!0));
       }),
@@ -173,7 +176,7 @@ class LoginOfficialView extends UiViewBase_1.UiViewBase {
               Log_1.Log.Error(
                 "Login",
                 10,
-                "性别获取为空,账号走的直接登录,性别设置异常"
+                "性别获取为空,账号走的直接登录,性别设置异常",
               ),
             LoginController_1.LoginController.EnterGame((e) => {
               e && this.CloseMe();
@@ -186,7 +189,7 @@ class LoginOfficialView extends UiViewBase_1.UiViewBase {
                   ConfigManager_1.ConfigManager.CreateCharacterConfig.GetInitialRoles()),
                 UiLoginSceneManager_1.UiLoginSceneManager.PlayRoleMontage(
                   e[r],
-                  18
+                  18,
                 ),
                 Log_1.Log.CheckInfo() &&
                   Log_1.Log.Info("Login", 10, "登录请求创角成功"),
@@ -196,7 +199,7 @@ class LoginOfficialView extends UiViewBase_1.UiViewBase {
                     Log_1.Log.CheckInfo() &&
                       Log_1.Log.Info("Login", 10, "登录请求创角成功,进入游戏"),
                       ModelManager_1.ModelManager.LoginModel.FinishLoginPromise();
-                  }
+                  },
                 ));
             });
       }),
@@ -205,23 +208,23 @@ class LoginOfficialView extends UiViewBase_1.UiViewBase {
           ? (this.pLt(!0),
             Log_1.Log.CheckInfo() && Log_1.Log.Info("Login", 8, "Sdk登录完成"),
             this.SetUiActive(!1),
-            "Windows" !== UE.GameplayStatics.GetPlatformName() &&
+            UE.GameplayStatics.GetPlatformName() !== "Windows" &&
               (UE.KismetSystemLibrary.ExecuteConsoleCommand(
                 GlobalData_1.GlobalData.World,
-                "r.Mobile.CustomDepthForToonRim 1"
+                "r.Mobile.CustomDepthForToonRim 1",
               ),
               UE.KismetSystemLibrary.ExecuteConsoleCommand(
                 GlobalData_1.GlobalData.World,
-                "r.DepthOfFieldQuality 1"
+                "r.DepthOfFieldQuality 1",
               )),
             UiLoginSceneManager_1.UiLoginSceneManager.LoadSequenceAsync(
               "LevelSequence_LoginAccount",
               () => {
                 this.UiViewSequence.PlaySequence(
-                  UiSequenceDefine_1.EUiSequenceType.LoginStart
+                  UiSequenceDefine_1.EUiSequenceType.LoginStart,
                 ),
                   this.vLt();
-              }
+              },
             ),
             this.MLt(),
             this.GetButton(14).RootUIComp.SetUIActive(!1))
@@ -244,7 +247,7 @@ class LoginOfficialView extends UiViewBase_1.UiViewBase {
                 ? (UiLoginSceneManager_1.UiLoginSceneManager.PlayLoginLoopSequence(),
                   this.pLt(!1),
                   this.UiViewSequence.PlaySequence(
-                    UiSequenceDefine_1.EUiSequenceType.LoginStart
+                    UiSequenceDefine_1.EUiSequenceType.LoginStart,
                   ),
                   this.SetUiActive(!0),
                   UiLayer_1.UiLayer.SetShowNormalMaskLayer(!1),
@@ -253,25 +256,26 @@ class LoginOfficialView extends UiViewBase_1.UiViewBase {
                     e && UiManager_1.UiManager.OpenView("LoginDebugView");
                   });
             },
-            !0
+            !0,
           ),
           ThirdPartySdkManager_1.ThirdPartySdkManager.Logout();
       }),
       (this.ILt = (e) => {
-        (this.oLt = 1 === e),
+        (this.oLt = e === 1),
           LocalStorage_1.LocalStorage.SetGlobal(
             LocalStorageDefine_1.ELocalStorageGlobalKey.AgreeAgreement,
-            this.oLt
+            this.oLt,
           );
       }),
       (this.TLt = () => {
         UiManager_1.UiManager.OpenView(
           "LoginAgeTipView",
-          LoginAgeTipView_1.ELoginShowType.AgeTip
+          LoginAgeTipView_1.ELoginShowType.AgeTip,
         ),
           UiLayer_1.UiLayer.SetShowNormalMaskLayer(!0);
       });
   }
+
   OnRegisterComponent() {
     (this.ComponentRegisterInfos = [
       [0, UE.UIButtonComponent],
@@ -309,11 +313,12 @@ class LoginOfficialView extends UiViewBase_1.UiViewBase {
         [14, this.dLt],
       ]);
   }
+
   OnStart() {
     (ModelManager_1.ModelManager.LoginModel.LoginTraceId =
       UE.KismetGuidLibrary.NewGuid().ToString()),
       LoginController_1.LoginController.LogLoginProcessLink(
-        LoginDefine_1.ELoginStatus.LoginViewOpen
+        LoginDefine_1.ELoginStatus.LoginViewOpen,
       ),
       ModelManager_1.ModelManager.LoginModel.InitConfig(),
       ModelManager_1.ModelManager.LoginModel.FixLoginFailInfo(),
@@ -323,7 +328,7 @@ class LoginOfficialView extends UiViewBase_1.UiViewBase {
       this.DLt(),
       KuroSdkController_1.KuroSdkController.CheckIfSdkLogin() &&
         KuroSdkController_1.KuroSdkController.PostKuroSdkEvent(6);
-    var e = ModelManager_1.ModelManager.PlatformModel.IsPc();
+    const e = ModelManager_1.ModelManager.PlatformModel.IsPc();
     this.GetButton(12).RootUIComp.SetUIActive(e),
       this.GetItem(13).SetUIActive(!1),
       this.gLt(),
@@ -333,57 +338,62 @@ class LoginOfficialView extends UiViewBase_1.UiViewBase {
       this.ULt(),
       this.xLt();
   }
+
   LLt() {
     (this.oLt = !0),
       this.GetExtendToggle(5).SetToggleState(this.oLt ? 1 : 0, !1);
   }
+
   DLt() {
     LguiUtil_1.LguiUtil.SetLocalText(this.GetText(10), "ClickEnterGame");
   }
+
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.LoginRequestResult,
-      this.mke
+      this.mke,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.SdkPostWebViewRedPointRefresh,
-        this.CLt
+        this.CLt,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.SdkLoginResult,
-        this.fLt
+        this.fLt,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnGetLoginPlayerInfo,
-        this.SLt
+        this.SLt,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnConfirmServerItem,
-        this.ELt
+        this.ELt,
       );
   }
+
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.LoginRequestResult,
-      this.mke
+      this.mke,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.SdkPostWebViewRedPointRefresh,
-        this.CLt
+        this.CLt,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.SdkLoginResult,
-        this.fLt
+        this.fLt,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnGetLoginPlayerInfo,
-        this.SLt
+        this.SLt,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnConfirmServerItem,
-        this.ELt
+        this.ELt,
       );
   }
+
   OnAfterShow() {
     LoginServerController_1.LoginServerController.PingAllRegion(),
       KuroSdkController_1.KuroSdkController.CanUseSdk() &&
@@ -391,6 +401,7 @@ class LoginOfficialView extends UiViewBase_1.UiViewBase {
           ? LoginController_1.LoginController.OpenSdkLoginView()
           : LoginController_1.LoginController.ReOpenSdkLoginView());
   }
+
   vLt() {
     this.SetUiActive(!0),
       KuroSdkController_1.KuroSdkController.CanUseSdk() &&
@@ -400,80 +411,91 @@ class LoginOfficialView extends UiViewBase_1.UiViewBase {
           (e) => {
             ModelManager_1.ModelManager.LoginModel.SetServerName(e.name),
               ModelManager_1.ModelManager.LoginModel.SetServerId(e.id);
-          }
+          },
         ),
         this.PLt() && UiManager_1.UiManager.OpenView("LoginServerView"),
         this.GetButton(14).RootUIComp.SetUIActive(!0),
         this.yLt());
   }
+
   PLt() {
-    var e = ModelManager_1.ModelManager.LoginServerModel,
-      r = ModelManager_1.ModelManager.LoginModel;
+    const e = ModelManager_1.ModelManager.LoginServerModel;
+    const r = ModelManager_1.ModelManager.LoginModel;
     return !(
       !KuroSdkController_1.KuroSdkController.GetIfGlobalSdk() ||
       !e.IsFirstLogin(r.GetSdkLoginConfig()?.Uid ?? "")
     );
   }
+
   MLt() {
-    var e = ModelManager_1.ModelManager.LoginServerModel,
-      r = ModelManager_1.ModelManager.LoginModel;
+    const e = ModelManager_1.ModelManager.LoginServerModel;
+    const r = ModelManager_1.ModelManager.LoginModel;
     KuroSdkController_1.KuroSdkController.GetIfGlobalSdk() &&
       LoginServerController_1.LoginServerController.GetLoginPlayerInfo(
         1,
         r.GetSdkLoginConfig()?.Uid ?? "",
         r.GetSdkLoginConfig()?.UserName ?? "",
         r.GetSdkLoginConfig()?.Token ?? "",
-        e.GetCurrentArea()
+        e.GetCurrentArea(),
       );
   }
+
   GetLoginSequenceName(e) {
     return e === LoginDefine_1.ELoginSex.Boy
       ? "LevelSequence_LoginMale"
       : "LevelSequence_LoginFemale";
   }
+
   wLt() {
     this.GetButton(8).RootUIComp.SetUIActive(
-      !KuroSdkController_1.KuroSdkController.GetIfGlobalSdk()
+      !KuroSdkController_1.KuroSdkController.GetIfGlobalSdk(),
     );
   }
+
   RLt() {
     this.GetButton(4).RootUIComp.SetUIActive(
-      !KuroSdkController_1.KuroSdkController.GetIfGlobalSdk()
+      !KuroSdkController_1.KuroSdkController.GetIfGlobalSdk(),
     );
   }
+
   ALt() {
     this.GetItem(16).SetUIActive(
-      !KuroSdkController_1.KuroSdkController.GetIfGlobalSdk()
+      !KuroSdkController_1.KuroSdkController.GetIfGlobalSdk(),
     );
   }
+
   ULt() {
     this.GetText(9).SetText(
-      BaseConfigController_1.BaseConfigController.GetVersionString()
+      BaseConfigController_1.BaseConfigController.GetVersionString(),
     );
   }
+
   xLt() {
-    var e =
+    const e =
       ConfigManager_1.ConfigManager.UiResourceConfig.GetLogoPathByLanguage(
-        "LoginLogo"
+        "LoginLogo",
       );
     this.SetTextureByPath(e, this.GetTexture(17));
   }
+
   yLt() {
-    var e =
+    const e =
       ModelManager_1.ModelManager.LoginServerModel.CurrentSelectServerData.name;
     this.GetText(15).SetText(e);
   }
+
   gLt() {}
   bLt() {
     this.GetButton(11).RootUIComp.SetUIActive(
       KuroSdkController_1.KuroSdkController.CanUseSdk() &&
-        ModelManager_1.ModelManager.LoginModel.IsSdkLoggedIn()
+        ModelManager_1.ModelManager.LoginModel.IsSdkLoggedIn(),
     );
   }
+
   pLt(e) {
-    var r = this.GetButton(1),
-      i = this.GetButton(2),
-      o = this.GetButton(3);
+    const r = this.GetButton(1);
+    const i = this.GetButton(2);
+    const o = this.GetButton(3);
     KuroSdkController_1.KuroSdkController.CanUseSdk()
       ? (r.RootUIComp.SetUIActive(e),
         i.RootUIComp.SetUIActive(e),
